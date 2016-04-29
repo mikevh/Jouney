@@ -133,6 +133,7 @@
     <Compile Include="Controllers\AttendeesController.cs" />
     <Compile Include="Controllers\CommunityGroupsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LeadersController.cs" />
     <Compile Include="Controllers\MeetingsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -184,6 +185,11 @@
     <Content Include="Views\CommunityGroups\Details.cshtml" />
     <Content Include="Views\CommunityGroups\Edit.cshtml" />
     <Content Include="Views\CommunityGroups\Index.cshtml" />
+    <Content Include="Views\Leaders\Create.cshtml" />
+    <Content Include="Views\Leaders\Delete.cshtml" />
+    <Content Include="Views\Leaders\Details.cshtml" />
+    <Content Include="Views\Leaders\Edit.cshtml" />
+    <Content Include="Views\Leaders\Index.cshtml" />
     <Content Include="Views\Meetings\Create.cshtml" />
     <Content Include="Views\Meetings\Delete.cshtml" />
     <Content Include="Views\Meetings\Details.cshtml" />
@@ -200,6 +206,9 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

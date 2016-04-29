@@ -1,4 +1,4 @@
-﻿@model Journey.Web.Models.Meeting
+﻿@model Journey.Web.Models.Leader
 
 @{
     ViewBag.Title = "Delete";
@@ -8,23 +8,15 @@
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>Meeting</h4>
+    <h4>Leader</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.CommunityGroup.Name)
+            @Html.DisplayNameFor(model => model.Email)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.CommunityGroup.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Date)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Date)
+            @Html.DisplayFor(model => model.Email)
         </dd>
 
     </dl>

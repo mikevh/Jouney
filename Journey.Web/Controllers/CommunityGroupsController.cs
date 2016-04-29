@@ -17,7 +17,8 @@ namespace Journey.Web.Controllers
         // GET: CommunityGroups
         public ActionResult Index()
         {
-            return View(db.CommunityGroups.ToList());
+            var communityGroups = db.CommunityGroups.Include(c => c.Leader);
+            return View(communityGroups.ToList());
         }
 
         // GET: CommunityGroups/Details/5
@@ -38,6 +39,7 @@ namespace Journey.Web.Controllers
         // GET: CommunityGroups/Create
         public ActionResult Create()
         {
+            ViewBag.LeaderId = new SelectList(db.Leaders, "Id", "Email");
             return View();
         }
 
@@ -46,7 +48,7 @@ namespace Journey.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name")] CommunityGroup communityGroup)
+        public ActionResult Create([Bind(Include = "Id,Name,LeaderId")] CommunityGroup communityGroup)
         {
             if (ModelState.IsValid)
             {
@@ -55,6 +57,7 @@ namespace Journey.Web.Controllers
                 return RedirectToAction("Index");
             }
 
+            ViewBag.LeaderId = new SelectList(db.Leaders, "Id", "Email", communityGroup.LeaderId);
             return View(communityGroup);
         }
 
@@ -70,6 +73,7 @@ namespace Journey.Web.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.LeaderId = new SelectList(db.Leaders, "Id", "Email", communityGroup.LeaderId);
             return View(communityGroup);
         }
 
@@ -78,7 +82,7 @@ namespace Journey.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name")] CommunityGroup communityGroup)
+        public ActionResult Edit([Bind(Include = "Id,Name,LeaderId")] CommunityGroup communityGroup)
         {
             if (ModelState.IsValid)
             {
@@ -86,6 +90,7 @@ namespace Journey.Web.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.LeaderId = new SelectList(db.Leaders, "Id", "Email", communityGroup.LeaderId);
             return View(communityGroup);
         }
 

@@ -46,7 +46,7 @@ namespace Journey.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name")] Attendee attendee)
+        public ActionResult Create([Bind(Include = "Id,Name,IsMember")] Attendee attendee)
         {
             if (ModelState.IsValid)
             {
@@ -78,7 +78,7 @@ namespace Journey.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name")] Attendee attendee)
+        public ActionResult Edit([Bind(Include = "Id,Name,IsMember")] Attendee attendee)
         {
             if (ModelState.IsValid)
             {

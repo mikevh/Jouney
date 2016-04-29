@@ -10,112 +10,107 @@ using Journey.Web.Models;
 
 namespace Journey.Web.Controllers
 {
-    public class MeetingsController : Controller
+    public class LeadersController : Controller
     {
         private JourneyModel db = new JourneyModel();
 
-        // GET: Meetings
+        // GET: Leaders
         public ActionResult Index()
         {
-            var meetings = db.Meetings.Include(m => m.CommunityGroup);
-            return View(meetings.ToList());
+            return View(db.Leaders.ToList());
         }
 
-        // GET: Meetings/Details/5
+        // GET: Leaders/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Meeting meeting = db.Meetings.Find(id);
-            if (meeting == null)
+            Leader leader = db.Leaders.Find(id);
+            if (leader == null)
             {
                 return HttpNotFound();
             }
-            return View(meeting);
+            return View(leader);
         }
 
-        // GET: Meetings/Create
+        // GET: Leaders/Create
         public ActionResult Create()
         {
-            ViewBag.CommunityGroupId = new SelectList(db.CommunityGroups, "Id", "Name");
             return View();
         }
 
-        // POST: Meetings/Create
+        // POST: Leaders/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Date,CommunityGroupId")] Meeting meeting)
+        public ActionResult Create([Bind(Include = "Id,Email")] Leader leader)
         {
             if (ModelState.IsValid)
             {
-                db.Meetings.Add(meeting);
+                db.Leaders.Add(leader);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.CommunityGroupId = new SelectList(db.CommunityGroups, "Id", "Name", meeting.CommunityGroupId);
-            return View(meeting);
+            return View(leader);
         }
 
-        // GET: Meetings/Edit/5
+        // GET: Leaders/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Meeting meeting = db.Meetings.Find(id);
-            if (meeting == null)
+            Leader leader = db.Leaders.Find(id);
+            if (leader == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.CommunityGroupId = new SelectList(db.CommunityGroups, "Id", "Name", meeting.CommunityGroupId);
-            return View(meeting);
+            return View(leader);
         }
 
-        // POST: Meetings/Edit/5
+        // POST: Leaders/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Date,CommunityGroupId")] Meeting meeting)
+        public ActionResult Edit([Bind(Include = "Id,Email")] Leader leader)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(meeting).State = EntityState.Modified;
+                db.Entry(leader).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.CommunityGroupId = new SelectList(db.CommunityGroups, "Id", "Name", meeting.CommunityGroupId);
-            return View(meeting);
+            return View(leader);
         }
 
-        // GET: Meetings/Delete/5
+        // GET: Leaders/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Meeting meeting = db.Meetings.Find(id);
-            if (meeting == null)
+            Leader leader = db.Leaders.Find(id);
+            if (leader == null)
             {
                 return HttpNotFound();
             }
-            return View(meeting);
+            return View(leader);
         }
 
-        // POST: Meetings/Delete/5
+        // POST: Leaders/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Meeting meeting = db.Meetings.Find(id);
-            db.Meetings.Remove(meeting);
+            Leader leader = db.Leaders.Find(id);
+            db.Leaders.Remove(leader);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
