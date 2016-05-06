@@ -1,28 +1,30 @@
-﻿
-<h2>Edit</h2>
+﻿<h2>Edit</h2>
+<form ng-submit="save()">
 <div class="form-horizontal">
     <h4>Meeting</h4>
     <hr />
-    <!--<div class="form-group">
-        Met On
+
+    <div class="form-group">
+        <label class="control-label col-md-2">Met On</label>
         <div class="col-md-10">
-            <input type="text" ng-model="e.metOn" />
+            <input type="datetime" class="form-control" ng-model="e.date" />
         </div>
-    </div>-->
-    <!--<div class="form-group">
-        Community Group
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2">Community Group</label>
         <div class="col-md-10">
-            <select ng-model="e.communityGroupId"
-                    ng-options="o.id as o.name for o in communityGroups"></select>
+            <select class="form-control" ng-model="e.communityGroupId" ng-options="o.id as o.name for o in communityGroups"></select>
         </div>
-    </div>-->
-    <!--<div class="form-group">
+    </div>
+
+    <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <button type="button" ng-click="save()" class="btn btn-default">Save</button>
         </div>
-    </div>-->
+    </div>
 </div>
-
+</form>
 <div>
-    <a href="/Meetings">Back to list</a>
+    <a hre="/Meetings">Back to List</a>
 </div>
