@@ -16,36 +16,27 @@ namespace Journey.Web.Controllers
     {
         private JourneyModel db = new JourneyModel();
 
-        // GET: api/Meetings1
-        public IQueryable<Meeting> GetMeetings()
-        {
+        public IQueryable<Meeting> GetMeetings() {
             return db.Meetings;
         }
 
-        // GET: api/Meetings1/5
         [ResponseType(typeof(Meeting))]
-        public IHttpActionResult GetMeeting(int id)
-        {
+        public IHttpActionResult GetMeeting(int id) {
             Meeting meeting = db.Meetings.Find(id);
-            if (meeting == null)
-            {
+            if (meeting == null) {
                 return NotFound();
             }
 
             return Ok(meeting);
         }
 
-        // PUT: api/Meetings1/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutMeeting(int id, Meeting meeting)
-        {
-            if (!ModelState.IsValid)
-            {
+        public IHttpActionResult PutMeeting(int id, Meeting meeting) {
+            if (!ModelState.IsValid) {
                 return BadRequest(ModelState);
             }
 
-            if (id != meeting.Id)
-            {
+            if (id != meeting.Id) {
                 return BadRequest();
             }
 
@@ -70,12 +61,9 @@ namespace Journey.Web.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Meetings1
         [ResponseType(typeof(Meeting))]
-        public IHttpActionResult PostMeeting(Meeting meeting)
-        {
-            if (!ModelState.IsValid)
-            {
+        public IHttpActionResult PostMeeting(Meeting meeting) {
+            if (!ModelState.IsValid) {
                 return BadRequest(ModelState);
             }
 
@@ -85,13 +73,10 @@ namespace Journey.Web.Controllers
             return CreatedAtRoute("DefaultApi", new { id = meeting.Id }, meeting);
         }
 
-        // DELETE: api/Meetings1/5
         [ResponseType(typeof(Meeting))]
-        public IHttpActionResult DeleteMeeting(int id)
-        {
+        public IHttpActionResult DeleteMeeting(int id) {
             Meeting meeting = db.Meetings.Find(id);
-            if (meeting == null)
-            {
+            if (meeting == null) {
                 return NotFound();
             }
 
@@ -101,18 +86,11 @@ namespace Journey.Web.Controllers
             return Ok(meeting);
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
+        protected override void Dispose(bool disposing) {
+            if (disposing) {
                 db.Dispose();
             }
             base.Dispose(disposing);
-        }
-
-        private bool MeetingExists(int id)
-        {
-            return db.Meetings.Count(e => e.Id == id) > 0;
         }
     }
 }
