@@ -49,23 +49,23 @@ namespace Journey.Web.Controllers
                 return BadRequest();
             }
 
-            db.Entry(meeting).State = EntityState.Modified;
+            var orig = db.Meetings.Include(c => c.Attendees).Single(x => x.Id == id);
+            db.Entry(orig).CurrentValues.SetValues(meeting);
 
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!MeetingExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
+            foreach (var oa in orig.Attendees.ToList()) {
+                if (!meeting.Attendees.Any(a => a.Id == oa.Id)) {
+                    orig.Attendees.Remove(oa);
                 }
             }
+
+            foreach (var na in meeting.Attendees) {
+                if (!orig.Attendees.Any(a => a.Id == na.Id)) {
+                    db.Attendees.Attach(na);
+                    orig.Attendees.Add(na);
+                }
+            }
+
+            db.SaveChanges();
 
             return StatusCode(HttpStatusCode.NoContent);
         }

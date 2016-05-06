@@ -3,7 +3,7 @@
 
     var app = angular.module('app');
 
-    app.controller('editController', function ($scope, $state, $stateParams, MeetingData, CommunityGroupData) {
+    app.controller('editController', function ($scope, $state, $stateParams, MeetingData, CommunityGroupData, AttendeeData) {
 
         $scope.e = {
             date: new Date()
@@ -16,9 +16,9 @@
             });
         };
 
-        var getCommunityGroups = function() {
-            CommunityGroupData.all().then(function(result) {
-                $scope.communityGroups = result.data;
+        var getAttendees = function() {
+            AttendeeData.all().then(function(result) {
+                $scope.attendees = result.data;
             });
         };
 
@@ -28,7 +28,7 @@
             });
         };
 
-        getCommunityGroups();
+        getAttendees();
         getMeeting($stateParams.id);
     });
 })();

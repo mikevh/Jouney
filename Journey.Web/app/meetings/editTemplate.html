@@ -7,28 +7,23 @@
     <div class="form-group">
         <label class="control-label col-md-2">Met On</label>
         <div class="col-md-10">
-            <p class="input-group">
-                <input type="text" 
-                       class="form-control"
-                       uib-datepicker-popup="shortDate"
-                       ng-model="e.date"
-                       is-open="datePickerOpen"
-                       />
-                <span class="input-group-btn">
-                    <button type="button" class="btn btn-default" ng-click="datePickerOpen=true">
-                        <i class="glyphicon glyphicon-calendar"></i>
-                    </button>
-                </span>
-            </p>
+                <input type="datetime" class="form-control" ng-model="e.date" />
         </div>
     </div>`
 
     <div class="form-group">
         <label class="control-label col-md-2">Community Group</label>
         <div class="col-md-10">
-            <select class="form-control" ng-model="e.communityGroupId" ng-options="o.id as o.name for o in communityGroups"></select>
+            <span class="control-label">{{e.communityGroup.name}}</span>
         </div>
     </div>`
+
+    <div class="form-group">
+        <label class="control-label col-md-2">Attendees</label>
+        <div class="col-md-10">
+            <picker available="attendees" selected="e.attendees"/>
+        </div>
+    </div>
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">

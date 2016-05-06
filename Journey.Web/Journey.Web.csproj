@@ -143,6 +143,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\Attendees1Controller.cs" />
     <Compile Include="Controllers\AttendeesController.cs" />
     <Compile Include="Controllers\CommunityGroups1Controller.cs" />
     <Compile Include="Controllers\CommunityGroupsController.cs" />
@@ -159,6 +160,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\app.js" />
+    <Content Include="app\directives\picker.js" />
+    <Content Include="app\directives\pickerTemplate.html" />
     <Content Include="app\meetings\config.route.js" />
     <Content Include="app\meetings\editController.js" />
     <Content Include="app\meetings\editTemplate.html" />

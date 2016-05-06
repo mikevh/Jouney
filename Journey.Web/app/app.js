@@ -43,6 +43,21 @@
         };
     });
 
-    
+    app.factory('AttendeeData', function ($http) {
+        var api = '/api/attendees1';
+        var all = function() {
+            return $http.get(api);
+        };
 
+        var get = function(id) {
+            return $http.get(api + '/id');
+        };
+
+        return {
+            all: all,
+            get: get
+        };
+    });
+
+    
 })();
