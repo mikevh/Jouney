@@ -1,7 +1,7 @@
 ﻿(function() {
     'use strict';
 
-    var app = angular.module('app', ['ui.router']);
+    var app = angular.module('app', ['ngAnimate', 'ui.router', 'ui.bootstrap']);
 
     app.factory('MeetingData', function($http) {
         var api = '/api/meetings1';
@@ -13,9 +13,17 @@
             return $http.get(api + '/' + id);
         };
 
+        var save = function(meeting) {
+            if (meeting.id) {
+                return $http.put(api + '/' + meeting.id, meeting);
+            }
+            return $http.post(api, meeting);
+        };
+
         return {
             all: all,
-            get: get
+            get: get,
+            save: save
         };
     });
 
