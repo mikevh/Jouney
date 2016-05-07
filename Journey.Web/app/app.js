@@ -3,61 +3,45 @@
 
     var app = angular.module('app', ['ngAnimate', 'ui.router', 'ui.bootstrap']);
 
-    app.factory('MeetingData', function($http) {
-        var api = '/api/meetings1';
-        var all = function() {
-            return $http.get(api);
-        };
+    app.factory('REST', function($http) {
+        var resource = function (api) {
+            
+            var all = function () {
+                return $http.get(api);
+            };
 
-        var get = function(id) {
-            return $http.get(api + '/' + id);
-        };
+            var get = function (id) {
+                return $http.get(api + '/' + id);
+            };
 
-        var save = function(meeting) {
-            if (meeting.id) {
-                return $http.put(api + '/' + meeting.id, meeting);
-            }
-            return $http.post(api, meeting);
-        };
+            var save = function (obj) {
+                if (obj.id) {
+                    return $http.put(api + '/' + obj.id, obj);
+                }
+                return $http.post(api, obj);
+            };
 
+            return {
+                all: all,
+                get: get,
+                save: save
+            };
+        };
         return {
-            all: all,
-            get: get,
-            save: save
+            api: resource
         };
     });
 
-    app.factory('CommunityGroupData', function ($http) {
-        var api = '/api/communitygroups1';
-        var all = function() {
-            return $http.get(api);
-        };
-
-        var get = function(id) {
-            return $http.get(api + '/id');
-        };
-
-        return {
-            all: all,
-            get: get
-        };
+    app.factory('MeetingData', function (REST) {
+        return REST.api('/api/meetings1');
     });
 
-    app.factory('AttendeeData', function ($http) {
-        var api = '/api/attendees1';
-        var all = function() {
-            return $http.get(api);
-        };
-
-        var get = function(id) {
-            return $http.get(api + '/id');
-        };
-
-        return {
-            all: all,
-            get: get
-        };
+    app.factory('CommunityGroupData', function (REST) {
+        return REST.api('/api/communitygroups1');
     });
 
+    app.factory('AttendeeData', function (REST) {
+        return REST.api('/api/attendees1');
+    });
     
 })();
