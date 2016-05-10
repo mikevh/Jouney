@@ -22,10 +22,5 @@
         $scope.cancel = function() {
             $state.go('index');
         };
-
-        $scope.dateOptions = {
-            showWeeks: false,
-            formatDay: 'd'
-        };
     });
 })();

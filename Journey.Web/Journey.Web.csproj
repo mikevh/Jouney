@@ -139,7 +139,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
@@ -160,6 +159,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\app.js" />
+    <Content Include="app\communitygroups\config.route.js" />
+    <Content Include="app\communitygroups\editController.js" />
+    <Content Include="app\communitygroups\editTemplate.html" />
+    <Content Include="app\communitygroups\indexController.js" />
+    <Content Include="app\communitygroups\indexTemplate.html" />
     <Content Include="app\directives\picker.js" />
     <Content Include="app\directives\pickerTemplate.html" />
     <Content Include="app\meetings\config.route.js" />
