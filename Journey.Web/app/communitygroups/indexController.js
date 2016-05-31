@@ -1,17 +1,39 @@
 ﻿(function() {
     'use strict';
 
-    var app = angular.module('app');
+    angular
+        .module('app.communitygroups')
+        .controller('cgIndexController', controller);
 
-    app.controller('indexController', function ($scope, MeetingData) {
+    controller.$inject = ['$route', '$location', 'communityGroupService'];
+    
+    function controller($route, $location, communityGroupService) {
+        var vm = this;
+        vm.addMeeeting = addMeeeting;
+        vm.remove = remove;
 
-        var refreshMeetings = function() {
-            MeetingData.all().then(function(result) {
-                $scope.meetings = result.data;
+        activate();
+
+        function addMeeeting(group) {
+            $location.path('/Meetings/ForGroup/' + group.id);
+        }
+
+        function activate() {
+            communityGroupService.all().then(function (result) {
+                vm.communityGroups = result.data;
+                angular.forEach(vm.communityGroups, function(x) {
+                    communityGroupService.latest(x.id).then(function (y) {
+                        
+                        x.latest = y.data === null ? null : new Date(y.data);
+                    });
+                });
             });
-        };
+        }
 
-        refreshMeetings();
-    });
-
+        function remove(g) {
+            communityGroupService.remove(g.id).then(function() {
+                $route.reload();
+            });
+        }
+    }
 })();

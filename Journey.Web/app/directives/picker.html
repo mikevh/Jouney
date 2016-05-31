@@ -1,0 +1,16 @@
+﻿<div class="row">
+    <div class="col-md-3">
+        <select style="width: 150px"
+                ng-options="o as o.name for o in vm.available | filter: exclude"
+                ng-model="vm.selected_available" multiple="multiple"></select>
+    </div>
+    <div class="col-md-2">
+        <button type="button" class="btn" ng-click="vm.add()">Add</button><br>
+        <button type="button" class="btn" ng-click="vm.remove()">Remove</button>
+    </div>
+    <div class="col-md-3">
+        <select style="width: 150px"
+                ng-options="o as o.name for o in vm.selected"
+                ng-model="vm.selected_selected" multiple="multiple"></select>
+    </div>
+</div>

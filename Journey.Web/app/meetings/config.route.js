@@ -1,20 +1,42 @@
 ﻿(function() {
     'use strict';
 
-    var app = angular.module('app');
-    
-    app.config(function ($stateProvider, $urlRouterProvider) {
-        $urlRouterProvider.otherwise('/');
+    angular
+        .module('app.meetings')
+        .run(run);
 
-        $stateProvider.state('index', {
-            url: '/',
-            templateUrl: 'app/meetings/indexTemplate.html',
-            controller: 'indexController'
-        }).state('edit', {
-            url: '/edit/:id',
-            templateUrl: 'app/meetings/editTemplate.html',
-            controller: 'editController'
-        });
-    });
+    run.$inject = ['routehelper'];
 
+    function run(routehelper) {
+        routehelper.configureRoutes(getRoutes());
+    }
+
+    function getRoutes() {
+        return [
+            {
+                url: '/Meetings',
+                config: {
+                    templateUrl: 'app/meetings/index.html',
+                    controller: 'meetingsIndexController',
+                    controllerAs: 'vm'
+                }
+            },
+            {
+                url: '/Meetings/:id',
+                config: {
+                    templateUrl: 'app/meetings/edit.html',
+                    controller: 'meetingsEditController',
+                    controllerAs: 'vm'
+                }
+            },
+            {
+                url: '/Meetings/ForGroup/:communityGroupId',
+                config: {
+                    templateUrl: 'app/meetings/edit.html',
+                    controller: 'meetingsEditController',
+                    controllerAs: 'vm'
+                }
+            }
+        ];
+    }
 })();

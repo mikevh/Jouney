@@ -1,0 +1,61 @@
+﻿<h2>Edit Meeting</h2>
+<form ng-submit="vm.save()">
+    <div class="form-horizontal">
+        <h4>Meeting</h4>
+        <hr />
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Met On</label>
+            <div class="col-md-2">
+                <div class="input-group">
+                    <input type="datetime" class="form-control" ng-model="vm.e.date" ng-focus="vm.e.datePopup = true"
+                           uib-datepicker-popup="shortDate" datepicker-options="vm.dateOptions"
+                           is-open="vm.e.datePopup" show-button-bar="false" show-weeks="false" />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.e.datePopup = true">
+                            <i class="glyphicon glyphicon-calendar"></i>
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Community Group</label>
+            <div class="col-md-10">
+                <span class="control-label">{{vm.communityGroup.name}}</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Attendees</label>
+            <div class="col-md-3">
+                <input class="form-control" type="text" ng-model="vm.attendee" when-enter="vm.add()"
+                       placeholder="Attendee name"
+                       uib-typeahead="o as o.name for o in vm.attendees | filter:{name:$viewValue} | filter:vm.alreadySelected | limitTo:5"
+                       typeahead-show-hint="true"
+                       typeahead-min-length="1" />
+            </div>
+            <div class="col-md-1">
+                <p><button type="button" class="btn btn-default" ng-click="vm.add()" ng-disabled="vm.addIsDisabled()">Add</button></p>
+                <p><button type="button" class="btn btn-default" ng-click="vm.remove()" ng-disabled="vm.removeIsDisabled()">Remove</button></p>
+            </div>
+            <div class="col-md-5">
+                <select ng-options="o as vm.display(o) for o in vm.e.attendees" 
+                        ng-model="vm.selectedAttendees" class="form-control" multiple="multiple"></select>
+            </div>
+        </div>
+        <!--<pre>{{vm.attendee | json}}</pre>
+        <pre>{{vm.selectedAttendees | json}}</pre>-->
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button type="button" ng-click="vm.save()" class="btn btn-primary">Save</button>
+                <button type="button" ng-click="vm.cancel()" class="btn btn-default">Cancel</button>
+            </div>
+        </div>
+    </div>
+</form>
+<div>
+    <a href="/Meetings">Back to List</a>
+</div>

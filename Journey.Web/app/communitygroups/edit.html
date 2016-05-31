@@ -1,0 +1,30 @@
+﻿<h2>Edit Community Group</h2>
+<form ng-submit="save()">
+<div class="form-horizontal">
+    <h4>Meeting</h4>
+    <hr />
+
+    <div class="form-group">
+        <label class="control-label col-md-2">Name</label>
+        <div class="col-md-10">
+            <input type="text" ng-model="vm.e.name" class="form-control"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-2">Leader</label>
+        <div class="col-md-10">
+            <select class="form-control" ng-options="o.id as o.email for o in vm.leaders" ng-model="vm.e.leaderId"></select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <button type="button" ng-click="vm.save()" class="btn btn-primary">Save</button>
+            <button type="button" ng-click="vm.cancel()" class="btn btn-default">Cancel</button>
+        </div>
+    </div>
+</div>
+</form>
+<div>
+    <a href="#/CommunityGroups">Back to List</a>
+</div>

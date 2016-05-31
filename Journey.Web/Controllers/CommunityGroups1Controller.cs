@@ -16,6 +16,29 @@ namespace Journey.Web.Controllers
     {
         private JourneyModel db = new JourneyModel();
 
+        [Route("api/communitygroups1/latest/{id}")]
+        [HttpGet]
+        public IHttpActionResult LatestMeeting(int id) {
+//            var query = @";with latest as (
+//	select 
+//	max([date]) latestMeetingDate, 
+//	communitygroupid
+//	from Meetings
+//	group by CommunityGroupId
+//)
+//select
+//cg.*,
+//l.latestMeetingDate LastMeeting
+//from CommunityGroups cg
+//left join latest l on l.CommunityGroupId = cg.Id";
+
+            var query = "SELECT MAX(Date) FROM Meetings WHERE CommunityGroupId = @p0";
+
+            var rv = db.Database.SqlQuery<DateTime?>(query, id).FirstOrDefault();
+
+            return Ok(rv);
+        }
+
         // GET: api/CommunityGroups1
         public IQueryable<CommunityGroup> GetCommunityGroups()
         {

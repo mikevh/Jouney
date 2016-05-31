@@ -1,8 +1,8 @@
-﻿(function() {
+﻿(function () {
     'use strict';
 
     angular
-        .module('app.communitygroups')
+        .module('app.attendees')
         .run(run);
 
     run.$inject = ['routehelper'];
@@ -14,22 +14,21 @@
     function getRoutes() {
         return [
             {
-                url: '/CommunityGroups',
+                url: '/Attendees',
                 config: {
-                    templateUrl: 'app/communitygroups/index.html',
-                    controller: 'cgIndexController',
+                    templateUrl: 'app/attendees/index.html',
+                    controller: 'attendeesIndexController',
                     controllerAs: 'vm'
                 }
             },
             {
-                url: '/CommunityGroups/:id',
+                url: '/Attendees/:id',
                 config: {
-                    templateUrl: 'app/communitygroups/edit.html',
-                    controller: 'cgEditController',
+                    templateUrl: 'app/attendees/edit.html',
+                    controller: 'attendeesEditController',
                     controllerAs: 'vm'
                 }
             }
         ];
     }
-
 })();

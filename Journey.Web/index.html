@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html>
+<html data-ng-app="app">
+<head>
+    <meta charset="utf-8"/>
+    <title data-ng-bind="title"></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="node_modules/angular-ui-bootstrap/dist/ui-bootstrap-csp.css" rel="stylesheet" />
+    <link href="Content/Site.css" rel="stylesheet" />
+</head>
+<body>
+    <div>
+        <div data-ng-include="'app/layout/shell.html'"></div>
+    </div>
+
+    <!--vendor-->
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+
+    <script src="node_modules/angular/angular.min.js"></script>
+    <script src="node_modules/angular-animate/angular-animate.min.js"></script>
+    <script src="node_modules/angular-route/angular-route.min.js"></script>
+    <script src="node_modules/angular-sanitize/angular-sanitize.min.js"></script>
+
+    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <script src="node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js"></script>
+
+    <script src="node_modules/lodash/lodash.min.js"></script>
+
+    <!--module-->
+    <script src="app/app.module.js"></script>
+
+    <!--blocks-->
+    <script src="app/blocks/exception/exception.module.js"></script>
+    <script src="app/blocks/exception/exception-handler.provider.js"></script>
+    <script src="app/blocks/exception/exception.js"></script>
+
+    <script src="app/blocks/logger/logger.module.js"></script>
+    <script src="app/blocks/logger/logger.js"></script>
+
+    <script src="app/blocks/router/router.module.js"></script>
+    <script src="app/blocks/router/routehelper.js"></script>
+
+    <!--core-->
+    <script src="app/core/core.module.js"></script>
+    <script src="app/core/constants.js"></script>
+    <script src="app/core/config.js"></script>
+    <script src="app/core/restFactory.js"></script>
+    <script src="app/core/whenEnter.directive.js"></script>
+
+<!--directives-->
+<!--<script src="app/directives/picker.js"></script>-->
+
+<!--layout-->
+    <script src="app/layout/layout.module.js"></script>
+    <script src="app/layout/shell.js"></script>
+
+    <!--dashboard-->
+    <script src="app/dashboard/dashboard.module.js"></script>
+    <script src="app/dashboard/config.route.js"></script>
+    <script src="app/dashboard/dashboard.js"></script>
+
+    <!-- community groups-->
+    <script src="app/communitygroups/communitygroups.module.js"></script>
+    <script src="app/communitygroups/config.route.js"></script>
+    <script src="app/communitygroups/dataservice.js"></script>
+    <script src="app/communitygroups/indexController.js"></script>
+    <script src="app/communitygroups/editController.js"></script>
+
+    <!--leaders-->
+    <script src="app/leaders/leaders.module.js"></script>
+    <script src="app/leaders/dataservice.js"></script>
+    <script src="app/leaders/config.route.js"></script>
+    <script src="app/leaders/leadersEditController.js"></script>
+    <script src="app/leaders/leadersIndexController.js"></script>
+
+    <!--attendees-->
+    <script src="app/attendees/attendees.module.js"></script>
+    <script src="app/attendees/config.route.js"></script>
+    <script src="app/attendees/dataservice.js"></script>
+    <script src="app/attendees/indexController.js"></script>
+    <script src="app/attendees/editController.js"></script>
+
+<!--meeting-->
+    <script src="app/meetings/meetings.module.js"></script>
+    <script src="app/meetings/config.route.js"></script>
+    <script src="app/meetings/editController.js"></script>
+    <script src="app/meetings/indexController.js"></script>
+    <script src="app/meetings/dataservice.js"></script>
+</body>
+</html>

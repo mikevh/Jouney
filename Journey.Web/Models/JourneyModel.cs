@@ -3,6 +3,8 @@ using System.Data.Entity;
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Journey.Web.Models
 {
@@ -22,6 +24,7 @@ namespace Journey.Web.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        [Display(Name = "Journey Member")]
         public bool IsMember { get; set; }
 
         public virtual ICollection<Meeting> Meetings { get; set; }
@@ -30,7 +33,9 @@ namespace Journey.Web.Models
     public class Meeting
     {
         public int Id { get; set; }
+        [Display(Name = "Met on")]
         public DateTime Date { get; set; }
+        [Display(Name = "Community Group")]
         public int CommunityGroupId { get; set; }
 
         public virtual CommunityGroup CommunityGroup { get; set; }
@@ -41,10 +46,13 @@ namespace Journey.Web.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        [Display(Name = "Leader")]
         public int LeaderId { get; set; }
 
         public virtual Leader Leader { get; set; }
-        
+
+        [NotMapped]
+        public DateTime? LastMeeting { get; private set; }
     }
 
     public class Leader

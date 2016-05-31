@@ -43,15 +43,19 @@ namespace Journey.Web.Controllers
             var orig = db.Meetings.Include(c => c.Attendees).Single(x => x.Id == id);
             db.Entry(orig).CurrentValues.SetValues(meeting);
 
+            // remove any attendees no longer in attendee list from orig db obj
             foreach (var oa in orig.Attendees.ToList()) {
                 if (!meeting.Attendees.Any(a => a.Id == oa.Id)) {
                     orig.Attendees.Remove(oa);
                 }
             }
 
+            // add all new attendees
             foreach (var na in meeting.Attendees) {
                 if (!orig.Attendees.Any(a => a.Id == na.Id)) {
-                    db.Attendees.Attach(na);
+                    if (na.Id > 0) {
+                        db.Attendees.Attach(na);
+                    }
                     orig.Attendees.Add(na);
                 }
             }
@@ -67,6 +71,10 @@ namespace Journey.Web.Controllers
                 return BadRequest(ModelState);
             }
 
+            // for existing attendees, don't create new entries
+            foreach (var a in meeting.Attendees.Where(x => x.Id > 0)) {
+                db.Attendees.Attach(a);
+            }
             db.Meetings.Add(meeting);
             db.SaveChanges();
 

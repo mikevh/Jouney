@@ -1,17 +1,23 @@
 ﻿(function() {
     'use strict';
 
-    var app = angular.module('app');
+    angular
+        .module('app')
+        .controller('meetingsIndexController', controller);
 
-    app.controller('indexController', function ($scope, MeetingData) {
+    controller.$inject = ['meetingsService'];
 
-        var refreshMeetings = function() {
-            MeetingData.all().then(function(result) {
-                $scope.meetings = result.data;
+    function controller(meetingsService) {
+
+        var vm = this;
+
+        activate();
+
+        function activate() {
+            meetingsService.all().then(function (result) {
+                vm.meetings = result.data;
             });
-        };
-
-        refreshMeetings();
-    });
+        }
+    }
 
 })();

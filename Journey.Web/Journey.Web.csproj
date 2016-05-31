@@ -147,6 +147,7 @@
     <Compile Include="Controllers\CommunityGroups1Controller.cs" />
     <Compile Include="Controllers\CommunityGroupsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\Leaders1Controller.cs" />
     <Compile Include="Controllers\LeadersController.cs" />
     <Compile Include="Controllers\Meetings1Controller.cs" />
     <Compile Include="Controllers\MeetingsController.cs" />
@@ -158,25 +159,61 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="app\app.js" />
+    <Content Include="app\app.module.js" />
+    <Content Include="app\attendees\config.route.js" />
+    <Content Include="app\attendees\dataservice.js" />
+    <Content Include="app\attendees\attendees.module.js" />
+    <Content Include="app\attendees\edit.html" />
+    <Content Include="app\attendees\index.html" />
+    <Content Include="app\attendees\editController.js" />
+    <Content Include="app\attendees\indexController.js" />
+    <Content Include="app\blocks\exception\exception-handler.provider.js" />
+    <Content Include="app\blocks\exception\exception.js" />
+    <Content Include="app\blocks\exception\exception.module.js" />
+    <Content Include="app\blocks\logger\logger.module.js" />
+    <Content Include="app\blocks\router\routehelper.js" />
+    <Content Include="app\blocks\router\router.module.js" />
+    <Content Include="app\communitygroups\communitygroups.module.js" />
+    <Content Include="app\communitygroups\dataservice.js" />
+    <Content Include="app\core\config.js" />
+    <Content Include="app\core\constants.js" />
+    <Content Include="app\core\core.module.js" />
+    <Content Include="app\core\restFactory.js" />
+    <Content Include="app\core\whenEnter.directive.js" />
+    <Content Include="app\dashboard\config.route.js" />
+    <Content Include="app\dashboard\dashboard.html" />
+    <Content Include="app\dashboard\dashboard.js" />
+    <Content Include="app\dashboard\dashboard.module.js" />
+    <Content Include="app\layout\layout.module.js" />
+    <Content Include="app\layout\shell.html" />
+    <Content Include="app\layout\shell.js" />
+    <Content Include="app\layout\topnav.html" />
+    <Content Include="app\leaders\config.route.js" />
+    <Content Include="app\leaders\dataservice.js" />
+    <Content Include="app\leaders\leadersEdit.html" />
+    <Content Include="app\leaders\leadersIndex.html" />
+    <Content Include="app\leaders\leadersEditController.js" />
+    <Content Include="app\leaders\leadersIndexController.js" />
+    <Content Include="app\leaders\leaders.module.js" />
     <Content Include="app\communitygroups\config.route.js" />
     <Content Include="app\communitygroups\editController.js" />
-    <Content Include="app\communitygroups\editTemplate.html" />
+    <Content Include="app\communitygroups\edit.html" />
     <Content Include="app\communitygroups\indexController.js" />
-    <Content Include="app\communitygroups\indexTemplate.html" />
-    <Content Include="app\directives\picker.js" />
-    <Content Include="app\directives\pickerTemplate.html" />
+    <Content Include="app\communitygroups\index.html" />
     <Content Include="app\meetings\config.route.js" />
+    <Content Include="app\meetings\dataservice.js" />
     <Content Include="app\meetings\editController.js" />
-    <Content Include="app\meetings\editTemplate.html" />
+    <Content Include="app\meetings\edit.html" />
     <Content Include="app\meetings\indexController.js" />
-    <Content Include="app\meetings\indexTemplate.html" />
+    <Content Include="app\meetings\index.html" />
+    <Content Include="app\meetings\meetings.module.js" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="index.html" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="package.json" />
@@ -192,7 +229,9 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -209,10 +248,6 @@
     <Content Include="Views\Attendees\Details.cshtml" />
     <Content Include="Views\Attendees\Edit.cshtml" />
     <Content Include="Views\Attendees\Index.cshtml" />
-    <Content Include="Views\CommunityGroups\Create.cshtml" />
-    <Content Include="Views\CommunityGroups\Delete.cshtml" />
-    <Content Include="Views\CommunityGroups\Details.cshtml" />
-    <Content Include="Views\CommunityGroups\Edit.cshtml" />
     <Content Include="Views\CommunityGroups\Index.cshtml" />
     <Content Include="Views\Leaders\Create.cshtml" />
     <Content Include="Views\Leaders\Delete.cshtml" />
@@ -234,6 +269,9 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="app\blocks\logger\logger.js" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -1,0 +1,21 @@
+﻿<h2>Index</h2>
+<p>
+    <a href="#/Leaders/0">Create New</a>
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Email
+        </th>
+        <th></th>
+    </tr>
+    <tr ng-repeat="l in vm.leaders">
+        <td>
+            {{l.email}}
+        </td>
+        <td>
+            <a href="#/Leaders/{{l.id}}">Edit</a> |
+            <a href="" ng-click="vm.remove(l)">Delete</a>
+        </td>
+    </tr>
+</table>
