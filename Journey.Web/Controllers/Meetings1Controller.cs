@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
+using AutoMapper;
 using Journey.Web.Models;
 
 namespace Journey.Web.Controllers
@@ -16,72 +17,75 @@ namespace Journey.Web.Controllers
     {
         private JourneyModel db = new JourneyModel();
 
-        public IQueryable<Meeting> GetMeetings() {
-            return db.Meetings;
+        public IHttpActionResult GetMeetings() {
+            var rv = db.Meetings.Include(x => x.Attendees).Include(x => x.CommunityGroup).Select(Mapper.Map<DTO.Meeting>);
+
+            return Ok(rv);
         }
 
-        [ResponseType(typeof(Meeting))]
         public IHttpActionResult GetMeeting(int id) {
-            Meeting meeting = db.Meetings.Find(id);
+            var meeting = db.Meetings.Include(x => x.Attendees).SingleOrDefault(x => x.Id == id);
             if (meeting == null) {
                 return NotFound();
             }
 
-            return Ok(meeting);
+            var dto = Mapper.Map<DTO.Meeting>(meeting);
+
+            return Ok(dto);
         }
 
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutMeeting(int id, Meeting meeting) {
+        public IHttpActionResult PutMeeting(int id, DTO.Meeting meeting_vm) {
             if (!ModelState.IsValid) {
                 return BadRequest(ModelState);
             }
 
-            if (id != meeting.Id) {
+            if (id != meeting_vm.Id) {
                 return BadRequest();
             }
 
-            var orig = db.Meetings.Include(c => c.Attendees).Single(x => x.Id == id);
-            db.Entry(orig).CurrentValues.SetValues(meeting);
+            var origModel = db.Meetings.Include(c => c.Attendees).Single(x => x.Id == id);
+            db.Entry(origModel).CurrentValues.SetValues(meeting_vm);
 
             // remove any attendees no longer in attendee list from orig db obj
-            foreach (var oa in orig.Attendees.ToList()) {
-                if (!meeting.Attendees.Any(a => a.Id == oa.Id)) {
-                    orig.Attendees.Remove(oa);
+            foreach (var oa in origModel.Attendees.ToList()) {
+                if (meeting_vm.Attendees.All(a => a.Id != oa.Id)) {
+                    origModel.Attendees.Remove(oa);
                 }
             }
 
             // add all new attendees
-            foreach (var na in meeting.Attendees) {
-                if (!orig.Attendees.Any(a => a.Id == na.Id)) {
+            foreach (var na in meeting_vm.Attendees) {
+                if (origModel.Attendees.All(a => a.Id != na.Id)) {
                     if (na.Id > 0) {
-                        db.Attendees.Attach(na);
+                        origModel.Attendees.Add(db.Attendees.FirstOrDefault(x => x.Id == na.Id));
                     }
-                    orig.Attendees.Add(na);
+                    else {
+                        origModel.Attendees.Add(Mapper.Map<Attendee>(na));
+                    }
                 }
             }
 
             db.SaveChanges();
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return Ok();
         }
 
-        [ResponseType(typeof(Meeting))]
-        public IHttpActionResult PostMeeting(Meeting meeting) {
+        public IHttpActionResult PostMeeting(DTO.Meeting meeting) {
             if (!ModelState.IsValid) {
                 return BadRequest(ModelState);
             }
 
             // for existing attendees, don't create new entries
             foreach (var a in meeting.Attendees.Where(x => x.Id > 0)) {
-                db.Attendees.Attach(a);
+                db.Attendees.Attach(Mapper.Map<Attendee>(a));
             }
-            db.Meetings.Add(meeting);
+            var model = Mapper.Map<Meeting>(meeting);
+            db.Meetings.Add(model);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = meeting.Id }, meeting);
+            return Ok(model.Id);
         }
 
-        [ResponseType(typeof(Meeting))]
         public IHttpActionResult DeleteMeeting(int id) {
             Meeting meeting = db.Meetings.Find(id);
             if (meeting == null) {

@@ -9,6 +9,8 @@ namespace Journey.Web.DTO
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public int LeaderId { get; set; }
+
         public Leader Leader { get; set; }
     }
 
@@ -16,6 +18,7 @@ namespace Journey.Web.DTO
     {
         public int Id { get; set; }   
         public string Email { get; set; }
+
         public List<CommunityGroup> CommunityGroups { get; set; } 
     }
 
@@ -24,6 +27,7 @@ namespace Journey.Web.DTO
         public int Id { get; set; }
         public string Name { get; set; }
         public bool IsMember { get; set; }
+
         public List<Meeting> Meetings { get; set; }
     }
 
@@ -31,6 +35,7 @@ namespace Journey.Web.DTO
     {
         public int Id { get; set; }   
         public DateTime Date { get; set; }
+        public int CommunityGroupId { get; set; }
         public CommunityGroup CommunityGroup { get; set; }
         public List<Attendee> Attendees { get; set; } 
     }
