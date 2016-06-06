@@ -8,111 +8,95 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
+using AutoMapper;
 using Journey.Web.Models;
 
 namespace Journey.Web.Controllers
 {
     public class Attendees1Controller : ApiController
     {
-        private JourneyModel db = new JourneyModel();
+        private readonly JourneyModel _db = new JourneyModel();
 
         // GET: api/Attendees1
-        public IQueryable<Attendee> GetAttendees()
-        {
-            return db.Attendees;
+        public IHttpActionResult GetAttendees() {
+            var attendees = _db.Attendees.ToList();
+
+            var rv = attendees.Select(Mapper.Map<DTO.Attendee>);
+
+            return Ok(rv);
         }
 
         // GET: api/Attendees1/5
-        [ResponseType(typeof(Attendee))]
-        public IHttpActionResult GetAttendee(int id)
-        {
-            Attendee attendee = db.Attendees.Find(id);
-            if (attendee == null)
-            {
+        public IHttpActionResult GetAttendee(int id) {
+            Attendee attendee = _db.Attendees.Find(id);
+            if (attendee == null) {
                 return NotFound();
             }
 
-            return Ok(attendee);
+            return Ok(Mapper.Map<DTO.Attendee>(attendee));
         }
 
         // PUT: api/Attendees1/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutAttendee(int id, Attendee attendee)
-        {
-            if (!ModelState.IsValid)
-            {
+        public IHttpActionResult PutAttendee(int id, DTO.Attendee attendee) {
+            if (!ModelState.IsValid) {
                 return BadRequest(ModelState);
             }
 
-            if (id != attendee.Id)
-            {
+            if (id != attendee.Id) {
                 return BadRequest();
             }
 
-            db.Entry(attendee).State = EntityState.Modified;
+            var attendeeModel = Mapper.Map<Attendee>(attendee);
+            _db.Entry(attendeeModel).State = EntityState.Modified;
 
-            try
-            {
-                db.SaveChanges();
+            try {
+                _db.SaveChanges();
             }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!AttendeeExists(id))
-                {
+            catch (DbUpdateConcurrencyException) {
+                if (!AttendeeExists(id)) {
                     return NotFound();
                 }
-                else
-                {
-                    throw;
-                }
+                throw;
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return Ok();
         }
 
         // POST: api/Attendees1
-        [ResponseType(typeof(Attendee))]
-        public IHttpActionResult PostAttendee(Attendee attendee)
-        {
-            if (!ModelState.IsValid)
-            {
+        public IHttpActionResult PostAttendee(DTO.Attendee attendee) {
+            if (!ModelState.IsValid) {
                 return BadRequest(ModelState);
             }
+            var attendeeModel = Mapper.Map<Attendee>(attendee);
 
-            db.Attendees.Add(attendee);
-            db.SaveChanges();
+            _db.Attendees.Add(attendeeModel);
+            _db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = attendee.Id }, attendee);
+            return Ok(attendeeModel.Id);
         }
 
         // DELETE: api/Attendees1/5
-        [ResponseType(typeof(Attendee))]
-        public IHttpActionResult DeleteAttendee(int id)
-        {
-            Attendee attendee = db.Attendees.Find(id);
-            if (attendee == null)
-            {
+        public IHttpActionResult DeleteAttendee(int id) {
+            Attendee attendee = _db.Attendees.Find(id);
+            if (attendee == null) {
                 return NotFound();
             }
 
-            db.Attendees.Remove(attendee);
-            db.SaveChanges();
+            _db.Attendees.Remove(attendee);
+            _db.SaveChanges();
 
-            return Ok(attendee);
+            return Ok(Mapper.Map<DTO.Attendee>(attendee));
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
+        protected override void Dispose(bool disposing) {
+            if (disposing) {
+                _db.Dispose();
             }
             base.Dispose(disposing);
         }
 
-        private bool AttendeeExists(int id)
-        {
-            return db.Attendees.Count(e => e.Id == id) > 0;
+        private bool AttendeeExists(int id) {
+            return _db.Attendees.Count(e => e.Id == id) > 0;
         }
     }
 }

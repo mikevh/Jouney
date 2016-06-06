@@ -6,6 +6,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Journey.Web.App_Start;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
@@ -18,7 +19,7 @@ namespace Journey.Web
 
             settings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
             settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-
+            AutoMapperConfig.Configure();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
