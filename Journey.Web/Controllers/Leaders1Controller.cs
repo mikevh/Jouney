@@ -8,111 +8,86 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
+using Journey.Web.App_Start;
 using Journey.Web.Models;
 
 namespace Journey.Web.Controllers
 {
     public class Leaders1Controller : ApiController
     {
-        private JourneyModel db = new JourneyModel();
+        private readonly JourneyModel _db = new JourneyModel();
 
-        // GET: api/Leaders1
-        public IQueryable<Leader> GetLeaders()
-        {
-            return db.Leaders;
+        public IHttpActionResult GetLeaders() {
+            var rv = _db.Leaders.ToDtos();
+            return Ok(rv);
         }
 
-        // GET: api/Leaders1/5
-        [ResponseType(typeof(Leader))]
-        public IHttpActionResult GetLeader(int id)
-        {
-            Leader leader = db.Leaders.Find(id);
-            if (leader == null)
-            {
+        public IHttpActionResult GetLeader(int id) {
+            var model = _db.Leaders.Find(id);
+            if (model == null) {
                 return NotFound();
             }
-
-            return Ok(leader);
+            var rv = model.ToDto();
+            return Ok(rv);
         }
 
-        // PUT: api/Leaders1/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutLeader(int id, Leader leader)
-        {
-            if (!ModelState.IsValid)
-            {
+        public IHttpActionResult PutLeader(int id, DTO.Leader vm) {
+            if (!ModelState.IsValid) {
                 return BadRequest(ModelState);
             }
 
-            if (id != leader.Id)
-            {
+            if (id != vm.Id) {
                 return BadRequest();
             }
+            var model = vm.ToModel();
+            _db.Entry(model).State = EntityState.Modified;
 
-            db.Entry(leader).State = EntityState.Modified;
-
-            try
-            {
-                db.SaveChanges();
+            try {
+                _db.SaveChanges();
             }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!LeaderExists(id))
-                {
+            catch (DbUpdateConcurrencyException) {
+                if (!LeaderExists(id)) {
                     return NotFound();
                 }
-                else
-                {
-                    throw;
-                }
+                throw;
             }
 
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Leaders1
-        [ResponseType(typeof(Leader))]
-        public IHttpActionResult PostLeader(Leader leader)
-        {
-            if (!ModelState.IsValid)
-            {
+        public IHttpActionResult PostLeader(DTO.Leader vm) {
+            if (!ModelState.IsValid) {
                 return BadRequest(ModelState);
             }
+            var model = vm.ToModel();
+            _db.Leaders.Add(model);
+            _db.SaveChanges();
 
-            db.Leaders.Add(leader);
-            db.SaveChanges();
-
-            return CreatedAtRoute("DefaultApi", new { id = leader.Id }, leader);
+            return Ok(model.Id);
         }
 
-        // DELETE: api/Leaders1/5
-        [ResponseType(typeof(Leader))]
-        public IHttpActionResult DeleteLeader(int id)
-        {
-            Leader leader = db.Leaders.Find(id);
-            if (leader == null)
-            {
+        public IHttpActionResult DeleteLeader(int id) {
+            var model = _db.Leaders.Find(id);
+            if (model == null) {
                 return NotFound();
             }
 
-            db.Leaders.Remove(leader);
-            db.SaveChanges();
+            _db.Leaders.Remove(model);
+            _db.SaveChanges();
+            var rv = model.ToDto();
 
-            return Ok(leader);
+            return Ok(rv);
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
+        protected override void Dispose(bool disposing) {
+            if (disposing) {
+                _db.Dispose();
             }
             base.Dispose(disposing);
         }
 
-        private bool LeaderExists(int id)
-        {
-            return db.Leaders.Count(e => e.Id == id) > 0;
+        private bool LeaderExists(int id) {
+            return _db.Leaders.Count(e => e.Id == id) > 0;
         }
     }
 }

@@ -7,135 +7,95 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using System.Web.Http.Description;
+using Journey.Web.App_Start;
 using Journey.Web.Models;
 
 namespace Journey.Web.Controllers
 {
     public class CommunityGroups1Controller : ApiController
     {
-        private JourneyModel db = new JourneyModel();
+        private readonly JourneyModel _db = new JourneyModel();
 
         [Route("api/communitygroups1/latest/{id}")]
-        [HttpGet]
-        public IHttpActionResult LatestMeeting(int id) {
-//            var query = @";with latest as (
-//	select 
-//	max([date]) latestMeetingDate, 
-//	communitygroupid
-//	from Meetings
-//	group by CommunityGroupId
-//)
-//select
-//cg.*,
-//l.latestMeetingDate LastMeeting
-//from CommunityGroups cg
-//left join latest l on l.CommunityGroupId = cg.Id";
-
+        public IHttpActionResult GetLatestMeeting(int id) {
             var query = "SELECT MAX(Date) FROM Meetings WHERE CommunityGroupId = @p0";
 
-            var rv = db.Database.SqlQuery<DateTime?>(query, id).FirstOrDefault();
+            var rv = _db.Database.SqlQuery<DateTime?>(query, id).FirstOrDefault();
 
             return Ok(rv);
         }
 
-        // GET: api/CommunityGroups1
-        public IQueryable<CommunityGroup> GetCommunityGroups()
-        {
-            return db.CommunityGroups;
+        public IHttpActionResult GetCommunityGroups() {
+            var rv = _db.CommunityGroups.ToDtos();
+            return Ok(rv);
         }
 
-        // GET: api/CommunityGroups1/5
-        [ResponseType(typeof(CommunityGroup))]
-        public IHttpActionResult GetCommunityGroup(int id)
-        {
-            CommunityGroup communityGroup = db.CommunityGroups.Find(id);
-            if (communityGroup == null)
-            {
+        public IHttpActionResult GetCommunityGroup(int id) {
+            var rv = _db.CommunityGroups.Find(id).ToDto();
+            if (rv == null) {
                 return NotFound();
             }
 
-            return Ok(communityGroup);
+            return Ok(rv);
         }
 
-        // PUT: api/CommunityGroups1/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutCommunityGroup(int id, CommunityGroup communityGroup)
-        {
-            if (!ModelState.IsValid)
-            {
+        public IHttpActionResult PutCommunityGroup(int id, DTO.CommunityGroup vm) {
+            if (!ModelState.IsValid) {
                 return BadRequest(ModelState);
             }
 
-            if (id != communityGroup.Id)
-            {
+            if (id != vm.Id) {
                 return BadRequest();
             }
+            var model = vm.ToModel();
+            _db.Entry(model).State = EntityState.Modified;
 
-            db.Entry(communityGroup).State = EntityState.Modified;
-
-            try
-            {
-                db.SaveChanges();
+            try {
+                _db.SaveChanges();
             }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CommunityGroupExists(id))
-                {
+            catch (DbUpdateConcurrencyException) {
+                if (!CommunityGroupExists(id)) {
                     return NotFound();
                 }
-                else
-                {
-                    throw;
-                }
+                throw;
             }
 
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/CommunityGroups1
-        [ResponseType(typeof(CommunityGroup))]
-        public IHttpActionResult PostCommunityGroup(CommunityGroup communityGroup)
-        {
-            if (!ModelState.IsValid)
-            {
+        public IHttpActionResult PostCommunityGroup(DTO.CommunityGroup vm) {
+            if (!ModelState.IsValid) {
                 return BadRequest(ModelState);
             }
+            var model = vm.ToModel();
+            _db.CommunityGroups.Add(model);
+            _db.SaveChanges();
 
-            db.CommunityGroups.Add(communityGroup);
-            db.SaveChanges();
-
-            return CreatedAtRoute("DefaultApi", new { id = communityGroup.Id }, communityGroup);
+            return Ok(model.Id);
         }
 
-        // DELETE: api/CommunityGroups1/5
-        [ResponseType(typeof(CommunityGroup))]
-        public IHttpActionResult DeleteCommunityGroup(int id)
-        {
-            CommunityGroup communityGroup = db.CommunityGroups.Find(id);
-            if (communityGroup == null)
-            {
+        public IHttpActionResult DeleteCommunityGroup(int id) {
+            var model = _db.CommunityGroups.Find(id);
+            if (model == null) {
                 return NotFound();
             }
 
-            db.CommunityGroups.Remove(communityGroup);
-            db.SaveChanges();
+            _db.CommunityGroups.Remove(model);
+            _db.SaveChanges();
+            var rv = model.ToDto();
 
-            return Ok(communityGroup);
+            return Ok(rv);
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
+        protected override void Dispose(bool disposing) {
+            if (disposing) {
+                _db.Dispose();
             }
             base.Dispose(disposing);
         }
 
-        private bool CommunityGroupExists(int id)
-        {
-            return db.CommunityGroups.Count(e => e.Id == id) > 0;
+        private bool CommunityGroupExists(int id) {
+            return _db.CommunityGroups.Count(e => e.Id == id) > 0;
         }
     }
 }
