@@ -11,14 +11,12 @@ namespace Journey.Web.App_Start
     public class AutoMapperConfig
     {
         public static void Configure() {
-            SetupMap<Models.Attendee, DTO.Attendee>();
-            SetupMap<Models.Leader, DTO.Leader>();
-            SetupMap<Models.CommunityGroup, DTO.CommunityGroup>();
-            SetupMap<Models.Meeting, DTO.Meeting>();
-        }
-
-        private static void SetupMap<T, U>() {
-            Mapper.Initialize(x => x.CreateMap<T,U>().ReverseMap());
+            Mapper.Initialize(x => {
+                x.CreateMap<Models.Attendee, DTO.Attendee>().ReverseMap();
+                x.CreateMap<Models.Leader, DTO.Leader>().ReverseMap();
+                x.CreateMap<Models.CommunityGroup, DTO.CommunityGroup>().ReverseMap();
+                x.CreateMap<Models.Meeting, DTO.Meeting>().ReverseMap();
+            });
         }
     }
 
