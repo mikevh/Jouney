@@ -10,6 +10,7 @@ using Journey.Web.Models;
 
 namespace Journey.Web.Controllers
 {
+    [Authorize]
     public class Attendees1Controller : ApiController
     {
         private readonly JourneyModel _db = new JourneyModel();

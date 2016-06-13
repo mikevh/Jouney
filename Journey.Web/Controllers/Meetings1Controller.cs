@@ -13,6 +13,7 @@ using Journey.Web.Models;
 
 namespace Journey.Web.Controllers
 {
+    [Authorize]
     public class Meetings1Controller : ApiController
     {
         private JourneyModel db = new JourneyModel();
