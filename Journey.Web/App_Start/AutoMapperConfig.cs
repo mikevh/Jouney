@@ -4,7 +4,10 @@ using System.Linq;
 using System.Reflection;
 using System.Web;
 using AutoMapper;
+using Journey.Web.DTO;
+using Journey.Web.Models;
 using Microsoft.Ajax.Utilities;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Journey.Web.App_Start
 {
@@ -12,6 +15,8 @@ namespace Journey.Web.App_Start
     {
         public static void Configure() {
             Mapper.Initialize(x => {
+                x.CreateMap<ApplicationUser, JourneyUser>().ForMember(m => m.Roles, o => o.Ignore()).ReverseMap();
+
                 x.CreateMap<Models.Attendee, DTO.Attendee>().ReverseMap();
                 x.CreateMap<Models.Leader, DTO.Leader>().ReverseMap();
                 x.CreateMap<Models.CommunityGroup, DTO.CommunityGroup>().ReverseMap();
@@ -22,6 +27,11 @@ namespace Journey.Web.App_Start
 
     public static class Maps
     {
+        public static JourneyUser ToDto(this ApplicationUser user) { return Mapper.Map<JourneyUser>(user); }
+        public static ApplicationUser ToAppUser(this JourneyUser user) { return Mapper.Map<ApplicationUser>(user);}
+        public static List<JourneyUser> ToDtos(this IEnumerable<ApplicationUser> users) { return users.Select(ToDto).ToList(); } 
+        public static List<ApplicationUser> ToAppUsers(this IEnumerable<JourneyUser> users) { return users.Select(ToAppUser).ToList(); } 
+
         public static DTO.Attendee ToDto(this Models.Attendee src) { return Mapper.Map<DTO.Attendee>(src); }
         public static Models.Attendee ToModel(this DTO.Attendee src) { return Mapper.Map<Models.Attendee>(src); }
         public static List<DTO.Attendee> ToDtos(this IEnumerable<Models.Attendee> src) { return src.Select(ToDto).ToList(); } 

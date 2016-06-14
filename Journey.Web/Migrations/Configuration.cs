@@ -49,6 +49,7 @@ namespace Journey.Web.Migrations
             }
             var adminuser = new ApplicationUser {
                 UserName = adminUsername,
+                Email = adminUsername,
                 PasswordHash = new PasswordHasher().HashPassword(adminPassword)
             };
             var userStore = new UserStore<ApplicationUser>(context);
@@ -57,10 +58,13 @@ namespace Journey.Web.Migrations
             var roleStore = new RoleStore<IdentityRole>(context);
             var roleManager = new RoleManager<IdentityRole>(roleStore);
             var adminRole = new IdentityRole("Administrator");
+            var activeRole = new IdentityRole("Active");
 
+            roleManager.Create(activeRole);
             roleManager.Create(adminRole);
             userManager.Create(adminuser);
             userManager.AddToRole(adminuser.Id, "Administrator");
+            userManager.AddToRole(adminuser.Id, "Active");
         }
     }
 }

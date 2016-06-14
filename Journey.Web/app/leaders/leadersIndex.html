@@ -7,11 +7,15 @@
         <th>
             Email
         </th>
+        <th ng-repeat="r in vm.roles">{{r}}</th>
         <th></th>
     </tr>
     <tr ng-repeat="l in vm.leaders">
         <td>
             {{l.email}}
+        </td>
+        <td ng-repeat="r in vm.roles">
+            <input type="checkbox" ng-checked="vm.isLeaderinRole(l, r)"/>
         </td>
         <td>
             <a href="#/Leaders/{{l.id}}">Edit</a> |
