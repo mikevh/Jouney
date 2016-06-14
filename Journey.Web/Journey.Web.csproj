@@ -148,14 +148,10 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\Attendees1Controller.cs" />
-    <Compile Include="Controllers\AttendeesController.cs" />
     <Compile Include="Controllers\CommunityGroups1Controller.cs" />
-    <Compile Include="Controllers\CommunityGroupsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Leaders1Controller.cs" />
-    <Compile Include="Controllers\LeadersController.cs" />
     <Compile Include="Controllers\Meetings1Controller.cs" />
-    <Compile Include="Controllers\MeetingsController.cs" />
     <Compile Include="DTOs\DTO.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -250,18 +246,6 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Attendees\Create.cshtml" />
-    <Content Include="Views\Attendees\Delete.cshtml" />
-    <Content Include="Views\Attendees\Details.cshtml" />
-    <Content Include="Views\Attendees\Edit.cshtml" />
-    <Content Include="Views\Attendees\Index.cshtml" />
-    <Content Include="Views\CommunityGroups\Index.cshtml" />
-    <Content Include="Views\Leaders\Create.cshtml" />
-    <Content Include="Views\Leaders\Delete.cshtml" />
-    <Content Include="Views\Leaders\Details.cshtml" />
-    <Content Include="Views\Leaders\Edit.cshtml" />
-    <Content Include="Views\Leaders\Index.cshtml" />
-    <Content Include="Views\Meetings\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
