@@ -5,6 +5,9 @@
         .module('app.core', [
             'ngAnimate', 'ngRoute', 'ngSanitize',
 
-            'blocks.exception', 'blocks.logger', 'blocks.router'
+            'blocks.exception',
+            'blocks.logger',
+            'blocks.router',
+            'blocks.interceptor'
         ]);
 })()
