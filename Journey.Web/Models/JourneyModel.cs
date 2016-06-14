@@ -10,7 +10,7 @@ namespace Journey.Web.Models
 {
     public class JourneyModel : DbContext
     {
-        public JourneyModel() : base("name=JourneyModel") {
+        public JourneyModel() : base("name=DefaultConnection") {
             Configuration.ProxyCreationEnabled = false;
             Configuration.LazyLoadingEnabled = false;
         }
