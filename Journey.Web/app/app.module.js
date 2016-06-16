@@ -12,7 +12,6 @@
             'app.leaders',
             'app.communitygroups',
             'app.attendees',
-            'app.meetings',
-            'app.users'
+            'app.meetings'
         ]);
 })();

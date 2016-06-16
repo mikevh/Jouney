@@ -11,9 +11,6 @@
         var vm = this;
         vm.save = save;
         vm.cancel = cancel;
-        vm.roles = [];
-        vm.inRole = inRole;
-        vm.setRole = setRole;
 
         activate();
 
@@ -29,20 +26,6 @@
                     email: ''
                 };
             }
-        }
-
-        function inRole(r) {
-            return true;
-        }
-
-        function setRole(r) {
-            
-        }
-
-        function getRoles() {
-            usersService.roles().then(function(result) {
-                vm.roles = result.data;
-            });
         }
 
         function save() {

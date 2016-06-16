@@ -6,10 +6,12 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
 using Journey.Web.App_Start;
 using Journey.Web.Models;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace Journey.Web.Controllers
 {
@@ -17,10 +19,17 @@ namespace Journey.Web.Controllers
     public class Leaders1Controller : ApiController
     {
         private readonly JourneyModel _db = new JourneyModel();
+        private ApplicationUserManager UserManager => HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
 
         public IHttpActionResult GetLeaders() {
             var rv = _db.Leaders.ToDtos();
             return Ok(rv);
+        }
+
+        [Route("users")]
+        public IHttpActionResult GetUsers() {
+            var users = UserManager.Users.ToDtos();
+            return Ok(users);
         }
 
         public IHttpActionResult GetLeader(int id) {

@@ -18,8 +18,6 @@ namespace Journey.Web.DTO
     {
         public int Id { get; set; }   
         public string Email { get; set; }
-
-        public List<CommunityGroup> CommunityGroups { get; set; } 
     }
 
     public class Attendee
