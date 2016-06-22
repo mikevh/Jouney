@@ -37,7 +37,7 @@ namespace Journey.Web.Migrations
     internal sealed class UserConfiguration : DbMigrationsConfiguration<ApplicationDbContext>
     {
         public UserConfiguration() {
-            AutomaticMigrationsEnabled = true;
+            AutomaticMigrationsEnabled = false;
         }
 
         private string adminUsername => ConfigurationManager.AppSettings["adminUsername"] ?? "admin@admin.com";
@@ -58,13 +58,10 @@ namespace Journey.Web.Migrations
             var roleStore = new RoleStore<IdentityRole>(context);
             var roleManager = new RoleManager<IdentityRole>(roleStore);
             var adminRole = new IdentityRole("Administrator");
-            var activeRole = new IdentityRole("Active");
 
-            roleManager.Create(activeRole);
             roleManager.Create(adminRole);
             userManager.Create(adminuser);
             userManager.AddToRole(adminuser.Id, "Administrator");
-            userManager.AddToRole(adminuser.Id, "Active");
         }
     }
 }

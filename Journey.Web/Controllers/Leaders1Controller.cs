@@ -11,6 +11,8 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using Journey.Web.App_Start;
 using Journey.Web.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 
 namespace Journey.Web.Controllers
@@ -21,15 +23,24 @@ namespace Journey.Web.Controllers
         private readonly JourneyModel _db = new JourneyModel();
         private ApplicationUserManager UserManager => HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
 
+        [HttpGet]
+        [Route("api/whoami")]
+        public IHttpActionResult WhoAmI() {
+            if (User.Identity.IsAuthenticated) {
+                string id = User.Identity.GetUserId();
+                var rv = new {
+                    Id = id,
+                    Roles = UserManager.GetRoles(id),
+                    Name = User.Identity.Name
+                };
+                return Ok(rv);
+            }
+            return Unauthorized();
+        }
+
         public IHttpActionResult GetLeaders() {
             var rv = _db.Leaders.ToDtos();
             return Ok(rv);
-        }
-
-        [Route("users")]
-        public IHttpActionResult GetUsers() {
-            var users = UserManager.Users.ToDtos();
-            return Ok(users);
         }
 
         public IHttpActionResult GetLeader(int id) {
@@ -49,10 +60,18 @@ namespace Journey.Web.Controllers
             if (id != vm.Id) {
                 return BadRequest();
             }
+            
+            var email = _db.Leaders.AsNoTracking().Single(x => x.Id == vm.Id).Email;
             var model = vm.ToModel();
             _db.Entry(model).State = EntityState.Modified;
 
+            var user = UserManager.FindByEmail(email);
+            user.UserName = vm.Email;
+            user.Email = vm.Email;
+            user.LockoutEnabled = false;
+
             try {
+                UserManager.Update(user);
                 _db.SaveChanges();
             }
             catch (DbUpdateConcurrencyException) {
@@ -65,13 +84,24 @@ namespace Journey.Web.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        public IHttpActionResult PostLeader(DTO.Leader vm) {
+        public IHttpActionResult PostLeader(DTO.CreateLeader vm) {
             if (!ModelState.IsValid) {
                 return BadRequest(ModelState);
             }
-            var model = vm.ToModel();
+
+            var newUser = new ApplicationUser {
+                UserName = vm.Email,
+                Email = vm.Email,
+            };
+            var model = new Models.Leader {Email = vm.Email};
+            var result = UserManager.Create(newUser, vm.Password ?? "password");
+            newUser.LockoutEnabled = false;
+            UserManager.Update(newUser);
             _db.Leaders.Add(model);
-            _db.SaveChanges();
+
+            if (result.Succeeded) {
+                _db.SaveChanges();
+            }
 
             return Ok(model.Id);
         }
@@ -81,6 +111,9 @@ namespace Journey.Web.Controllers
             if (model == null) {
                 return NotFound();
             }
+
+            var user = UserManager.FindByEmail(model.Email);
+            UserManager.Delete(user);
 
             _db.Leaders.Remove(model);
             _db.SaveChanges();

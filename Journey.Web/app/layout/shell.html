@@ -1,6 +1,37 @@
 ﻿<div data-ng-controller="Shell as vm">
     <header class="clearfix">
-        <div data-ng-include="'app/layout/topnav.html'"></div>
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a href="/" class="navbar-brand">Application name</a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="#/">Home</a></li>
+                        <li><a href="#/CommunityGroups">Groups</a></li>
+                        <li><a href="#/Attendees">Attendees</a></li>
+                        <li><a href="#/Meetings">Meetings</a></li>
+                        <li><a href="#/Leaders">Leaders</a></li>
+                    </ul>
+                    <!--loginpartial-->
+                    <ul ng-show="vm.profile" class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="/manage/index" ng-click="vm.logoff()">Hello {{profile.name}}!</a>
+                        </li>
+                        <li><a href="#" ng-click="vm.logoff()">Log off</a></li>
+                    </ul>
+                    <ul ng-if="!vm.profile" class="nav navbar-nav navbar-right">
+                        <li><a href="/account/login">Log in</a></li>
+                    </ul>
+                    <!-- end login partial-->
+                </div>
+            </div>
+        </div>
     </header>
     <section id="content" class="container content">
         <divc data-ng-view></divc>  

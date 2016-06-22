@@ -20,6 +20,13 @@ namespace Journey.Web.DTO
         public string Email { get; set; }
     }
 
+    public class CreateLeader
+    {
+        public int Id { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
+    }
+
     public class Attendee
     {
         public int Id { get; set; }
