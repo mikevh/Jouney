@@ -12,7 +12,6 @@ using System.Web.Http.Description;
 using Journey.Web.App_Start;
 using Journey.Web.Models;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 
 namespace Journey.Web.Controllers
@@ -20,7 +19,7 @@ namespace Journey.Web.Controllers
     [Authorize]
     public class Leaders1Controller : ApiController
     {
-        private readonly JourneyModel _db = new JourneyModel();
+        private readonly ApplicationDbContext _db = new ApplicationDbContext();
         private ApplicationUserManager UserManager => HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
 
         [HttpGet]

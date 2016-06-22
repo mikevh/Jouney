@@ -15,7 +15,7 @@ namespace Journey.Web.Controllers
     [Authorize]
     public class CommunityGroups1Controller : ApiController
     {
-        private readonly JourneyModel _db = new JourneyModel();
+        private readonly ApplicationDbContext _db = new ApplicationDbContext();
 
         [Route("api/communitygroups1/latest/{id}")]
         public IHttpActionResult GetLatestMeeting(int id) {

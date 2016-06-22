@@ -23,11 +23,18 @@ namespace Journey.Web.Models
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
+            Configuration.ProxyCreationEnabled = false;
+            Configuration.LazyLoadingEnabled = false;
         }
 
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
         }
+
+        public virtual DbSet<Attendee> Attendees { get; set; }
+        public virtual DbSet<Meeting> Meetings { get; set; }
+        public virtual DbSet<CommunityGroup> CommunityGroups { get; set; }
+        public virtual DbSet<Leader> Leaders { get; set; }
     }
 }

@@ -18,7 +18,6 @@
         function activate() {
             $rootScope.$watch('profile', function(val,old) {
                 if (!!val) {
-                    console.log('profile loaded');
                     vm.profile = val;
                 }
             });

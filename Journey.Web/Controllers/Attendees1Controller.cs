@@ -13,7 +13,7 @@ namespace Journey.Web.Controllers
     [Authorize]
     public class Attendees1Controller : ApiController
     {
-        private readonly JourneyModel _db = new JourneyModel();
+        private readonly ApplicationDbContext _db = new ApplicationDbContext();
 
         public IHttpActionResult GetAttendees() {
             var rv = _db.Attendees.ToDtos();

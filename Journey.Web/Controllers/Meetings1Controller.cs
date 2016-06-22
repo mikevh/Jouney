@@ -16,7 +16,7 @@ namespace Journey.Web.Controllers
     [Authorize]
     public class Meetings1Controller : ApiController
     {
-        private JourneyModel db = new JourneyModel();
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         public IHttpActionResult GetMeetings() {
             var rv = db.Meetings.Include(x => x.Attendees).Include(x => x.CommunityGroup).Select(Mapper.Map<DTO.Meeting>);

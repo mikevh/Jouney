@@ -8,24 +8,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Journey.Web.Models
 {
-    public class JourneyModel : DbContext
-    {
-        public JourneyModel() : base("name=DefaultConnection") {
-            Configuration.ProxyCreationEnabled = false;
-            Configuration.LazyLoadingEnabled = false;
-        }
-
-        public virtual DbSet<Attendee> Attendees { get; set; }
-        public virtual DbSet<Meeting> Meetings { get; set; }
-        public virtual DbSet<CommunityGroup> CommunityGroups { get; set; }
-        public virtual DbSet<Leader> Leaders { get; set; }
-    }
-
     public class Attendee
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        [Display(Name = "Journey Member")]
+        
         public bool IsMember { get; set; }
 
         public virtual ICollection<Meeting> Meetings { get; set; }
@@ -34,9 +21,9 @@ namespace Journey.Web.Models
     public class Meeting
     {
         public int Id { get; set; }
-        [Display(Name = "Met on")]
+        
         public DateTime Date { get; set; }
-        [Display(Name = "Community Group")]
+        
         public int CommunityGroupId { get; set; }
 
         public virtual CommunityGroup CommunityGroup { get; set; }
@@ -47,7 +34,7 @@ namespace Journey.Web.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        [Display(Name = "Leader")]
+        
         public int LeaderId { get; set; }
 
         public virtual Leader Leader { get; set; }
