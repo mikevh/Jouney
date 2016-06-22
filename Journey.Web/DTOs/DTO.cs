@@ -44,11 +44,4 @@ namespace Journey.Web.DTO
         public CommunityGroup CommunityGroup { get; set; }
         public List<Attendee> Attendees { get; set; } 
     }
-
-    public class JourneyUser
-    {
-        public string Id { get; set; }
-        public string Email { get; set; }
-        public List<string> Roles { get; set; }  
-    }
 }

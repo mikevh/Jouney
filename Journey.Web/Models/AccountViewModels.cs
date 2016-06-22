@@ -65,7 +65,7 @@ namespace Journey.Web.Models
     public class RegisterViewModel
     {
         [Required]
-        //[EmailAddress]
+        [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
@@ -105,7 +105,7 @@ namespace Journey.Web.Models
     public class ForgotPasswordViewModel
     {
         [Required]
-        //[EmailAddress]
+        [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
     }
