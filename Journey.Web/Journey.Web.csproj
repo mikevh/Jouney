@@ -258,23 +258,29 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="index.html" />
-    <Content Include="node_modules\angular-animate\angular-animate.min.js" />
-    <Content Include="node_modules\angular-route\angular-route.min.js" />
-    <Content Include="node_modules\angular-sanitize\angular-sanitize.min.js" />
-    <Content Include="node_modules\angular-ui-bootstrap\dist\ui-bootstrap-csp.css" />
-    <Content Include="node_modules\angular-ui-bootstrap\dist\ui-bootstrap-tpls.js" />
-    <Content Include="node_modules\angular\angular.min.js" />
-    <Content Include="node_modules\bootstrap\dist\css\bootstrap.min.css" />
-    <Content Include="node_modules\bootstrap\dist\js\bootstrap.min.js" />
-    <Content Include="node_modules\jquery\dist\jquery.min.js" />
-    <Content Include="node_modules\lodash\lodash.min.js" />
+    <Content Include="lib\angular-animate.min.js" />
+    <Content Include="lib\angular-route.min.js" />
+    <Content Include="lib\angular-sanitize.min.js" />
+    <Content Include="lib\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="lib\loading-bar.min.css" />
+    <Content Include="lib\loading-bar.min.js" />
+    <Content Include="lib\ui-bootstrap-csp.css" />
+    <Content Include="lib\ui-bootstrap-tpls.js" />
+    <Content Include="lib\angular.min.js" />
+    <Content Include="lib\bootstrap.min.css" />
+    <Content Include="lib\bootstrap.min.js" />
+    <Content Include="lib\jquery.min.js" />
+    <Content Include="lib\lodash.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="package.json" />
+    <Content Include="lib\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="lib\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="lib\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="lib\fonts\glyphicons-halflings-regular.woff2" />
     <None Include="Properties\PublishProfiles\journeyweb - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -327,9 +333,6 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
