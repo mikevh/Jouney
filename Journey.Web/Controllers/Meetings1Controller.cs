@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using AutoMapper;
+using Journey.Web.App_Start;
 using Journey.Web.Models;
 
 namespace Journey.Web.Controllers
@@ -76,11 +77,16 @@ namespace Journey.Web.Controllers
                 return BadRequest(ModelState);
             }
 
+            var model = Mapper.Map<Meeting>(meeting);
+            model.Attendees.Clear();
             // for existing attendees, don't create new entries
             foreach (var a in meeting.Attendees.Where(x => x.Id > 0)) {
-                db.Attendees.Attach(Mapper.Map<Attendee>(a));
+                model.Attendees.Add(db.Attendees.FirstOrDefault(x => x.Id == a.Id));
             }
-            var model = Mapper.Map<Meeting>(meeting);
+
+            foreach (var a in meeting.Attendees.Where(x => x.Id == 0)) {
+                model.Attendees.Add(a.ToModel());
+            }
             db.Meetings.Add(model);
             db.SaveChanges();
 
