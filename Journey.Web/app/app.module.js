@@ -5,7 +5,7 @@
         .module('app', [
             'ngAnimate',
             'ui.bootstrap',
-
+            'angular-loading-bar',
             'app.core',
             'app.dashboard',
             'app.layout',
