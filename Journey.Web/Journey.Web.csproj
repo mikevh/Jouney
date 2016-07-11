@@ -105,6 +105,14 @@
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="SendGrid, Version=7.0.4.0, Culture=neutral, PublicKeyToken=4f047e93159395ca, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sendgrid.7.0.5\lib\SendGrid.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SendGrid.CSharp.HTTP.Client, Version=2.0.4.0, Culture=neutral, PublicKeyToken=79219bf4e5ecaaca, processorArchitecture=MSIL">
+      <HintPath>..\packages\SendGrid.CSharp.HTTP.Client.2.0.4\lib\SendGrid.CSharp.HTTP.Client.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -230,7 +238,7 @@
     <Content Include="app\core\whoami.js" />
     <Content Include="app\dashboard\config.route.js" />
     <Content Include="app\dashboard\dashboard.html" />
-    <Content Include="app\dashboard\dashboard.js" />
+    <Content Include="app\dashboard\dashboardController.js" />
     <Content Include="app\dashboard\dashboard.module.js" />
     <Content Include="app\layout\layout.module.js" />
     <Content Include="app\layout\shell.html" />
@@ -263,7 +271,7 @@
     <Content Include="lib\angular-animate.min.js" />
     <Content Include="lib\angular-route.min.js" />
     <Content Include="lib\angular-sanitize.min.js" />
-    <Content Include="lib\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="lib\loading-bar.min.css" />
     <Content Include="lib\loading-bar.min.js" />
     <Content Include="lib\ui-bootstrap-csp.css" />
@@ -276,10 +284,10 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="package.json" />
-    <Content Include="lib\fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="lib\fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="lib\fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="lib\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <None Include="Properties\PublishProfiles\journeyweb - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-3.0.0.intellisense.js" />

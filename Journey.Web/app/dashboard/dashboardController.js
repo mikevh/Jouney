@@ -5,15 +5,15 @@
         .module('app.dashboard')
         .controller('dashboardController', dashboard);
 
-    dashboard.$inject = ['$q', 'logger'];
+    dashboard.$inject = ['$q', 'logger', '$location'];
 
-    function dashboard($q, logger) {
+    function dashboard($q, logger, $location) {
         var vm = this;
 
         activate();
 
         function activate() {
-            
+            $location.path('/CommunityGroups');
         }
     }
 })()
