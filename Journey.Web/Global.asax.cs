@@ -15,6 +15,7 @@ namespace Journey.Web
     public class MvcApplication : System.Web.HttpApplication
     {
         protected void Application_Start() {
+            NLog.LogManager.GetCurrentClassLogger().Info("Startup");
             var settings = GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings;
 
             settings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
