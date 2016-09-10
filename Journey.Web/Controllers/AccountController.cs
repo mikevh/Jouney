@@ -18,7 +18,7 @@ namespace Journey.Web.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-        private ILogger _logger;
+        private readonly ILogger _logger;
 
         public AccountController()
         {

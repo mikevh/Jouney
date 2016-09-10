@@ -42,6 +42,6 @@ namespace Journey.Web.DTO
         public DateTime Date { get; set; }
         public int CommunityGroupId { get; set; }
         public CommunityGroup CommunityGroup { get; set; }
-        public List<Attendee> Attendees { get; set; } 
+        public IEnumerable<Attendee> Attendees { get; set; } 
     }
 }

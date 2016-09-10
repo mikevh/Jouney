@@ -10,17 +10,40 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using AutoMapper;
 using Journey.Web.App_Start;
+using Journey.Web.Extensions;
 using Journey.Web.Models;
+using NLog;
 
 namespace Journey.Web.Controllers
 {
     [Authorize]
     public class Meetings1Controller : ApiController
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private readonly ApplicationDbContext db = new ApplicationDbContext();
+        private readonly ILogger _logger;
 
-        public IHttpActionResult GetMeetings() {
-            var rv = db.Meetings.Include(x => x.Attendees).Include(x => x.CommunityGroup).Select(Mapper.Map<DTO.Meeting>);
+        public Meetings1Controller()
+        {
+            _logger = LogManager.GetCurrentClassLogger();
+        }
+
+        public IHttpActionResult GetMeetings()
+        {
+            var rv = db.Meetings
+                .Include(x => x.Attendees)
+                .Include(x => x.CommunityGroup)
+                .Select(m => new DTO.Meeting
+                {
+                    Id = m.Id,
+                    CommunityGroup = new DTO.CommunityGroup {Name = m.CommunityGroup.Name},
+                    Date = m.Date,
+                    Attendees = m.Attendees.Select(a => new DTO.Attendee
+                    {
+                        Id = a.Id,
+                        Name = a.Name,
+                        IsMember = a.IsMember
+                    })
+                });
 
             return Ok(rv);
         }
@@ -45,12 +68,15 @@ namespace Journey.Web.Controllers
                 return BadRequest();
             }
 
+            _logger.Info("Meeting update: " + meeting_vm.ToJson());
+
             var origModel = db.Meetings.Include(c => c.Attendees).Single(x => x.Id == id);
             db.Entry(origModel).CurrentValues.SetValues(meeting_vm);
 
             // remove any attendees no longer in attendee list from orig db obj
             foreach (var oa in origModel.Attendees.ToList()) {
                 if (meeting_vm.Attendees.All(a => a.Id != oa.Id)) {
+                    _logger.Trace($"deleting attendee {oa.Id} from meeting {meeting_vm.Id}");
                     origModel.Attendees.Remove(oa);
                 }
             }
