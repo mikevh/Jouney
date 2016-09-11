@@ -49,14 +49,36 @@ namespace Journey.Web.Controllers
         }
 
         public IHttpActionResult GetMeeting(int id) {
-            var meeting = db.Meetings.Include(x => x.Attendees).SingleOrDefault(x => x.Id == id);
-            if (meeting == null) {
+            var m = db.Meetings.Include(x => x.Attendees).Include(x => x.CommunityGroup).SingleOrDefault(x => x.Id == id);
+            if (m == null) {
                 return NotFound();
             }
 
-            var dto = Mapper.Map<DTO.Meeting>(meeting);
+            //var rv = Mapper.Map<DTO.Meeting>(meeting);
 
-            return Ok(dto);
+            var rv = new DTO.Meeting
+            {
+                Id = m.Id,
+                CommunityGroupId = m.CommunityGroupId,
+                Date = m.Date,
+                Attendees = new List<DTO.Attendee>
+                (
+                    m.Attendees.Select(a => new DTO.Attendee
+                    {
+                        Id = a.Id,
+                        Name = a.Name,
+                        IsMember = a.IsMember
+                    })
+                ),
+                CommunityGroup = new DTO.CommunityGroup
+                {
+                    Id = m.CommunityGroupId,
+                    Name = m.CommunityGroup.Name,
+                    LeaderId = m.CommunityGroup.LeaderId
+                }
+            };
+
+            return Ok(rv);
         }
 
         public IHttpActionResult PutMeeting(int id, DTO.Meeting meeting_vm) {
