@@ -32,10 +32,10 @@
             });
         }
 
-        function remove(g) {
-            communityGroupService.remove(g.id).then(function() {
-                $route.reload();
-            });
-        }
+        //function remove(g) {
+        //    communityGroupService.remove(g.id).then(function() {
+        //        $route.reload();
+        //    });
+        //}
     }
 })();

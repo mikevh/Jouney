@@ -19,10 +19,10 @@
             });
         }
 
-        function remove(l) {
-            leadersService.remove(l.id).then(function(result) {
-                $route.reload();
-            });
-        }
+        //function remove(l) {
+        //    leadersService.remove(l.id).then(function(result) {
+        //        $route.reload();
+        //    });
+        //}
     }
 })();
