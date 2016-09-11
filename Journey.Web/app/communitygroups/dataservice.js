@@ -16,6 +16,10 @@
             return $http.get(api + '/latest/' + id);
         };
 
+        service.membershipCount = function(id) {
+            return $http.get(api + '/membershipcount/' + id);
+        };
+
         return service;
     }
 })();

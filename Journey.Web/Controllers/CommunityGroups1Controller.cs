@@ -13,11 +13,20 @@ using Journey.Web.Models;
 namespace Journey.Web.Controllers
 {
     [Authorize]
+    [RoutePrefix("api/communitygroups1")]
     public class CommunityGroups1Controller : ApiController
     {
         private readonly ApplicationDbContext _db = new ApplicationDbContext();
 
-        [Route("api/communitygroups1/latest/{id}")]
+        [Route("membershipcount/{id}")]
+        public IHttpActionResult GetMembershipCount(int id)
+        {
+            var count = _db.Attendees.Count(x => x.CommunityGroupId == id);
+
+            return Ok(count);
+        }
+
+        [Route("latest/{id}")]
         public IHttpActionResult GetLatestMeeting(int id) {
             var query = "SELECT MAX(Date) FROM Meetings WHERE CommunityGroupId = @p0";
 
@@ -27,7 +36,7 @@ namespace Journey.Web.Controllers
         }
 
         public IHttpActionResult GetCommunityGroups() {
-            var rv = _db.CommunityGroups.ToDtos();
+            var rv = _db.CommunityGroups.Include(x => x.Leader).ToDtos();
             return Ok(rv);
         }
 

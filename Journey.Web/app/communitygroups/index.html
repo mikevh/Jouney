@@ -4,6 +4,7 @@
     <tr>
         <th>Name</th>
         <th>Leader</th>
+        <th>Number of Members</th>
         <th>Last Meeting</th>
         <th></th>
         <th></th>
@@ -11,7 +12,8 @@
     <tr ng-repeat="g in vm.communityGroups">
         <td>{{ g.name }}</td>
         <td>{{ g.leader.email }}</td>
-        <td>{{g.latest | date}}</td>
+        <td>{{ g.membershipCount }}</td>
+        <td>{{ g.latest | date}}</td>
         <td>
             <button type="button" class="btn btn-default" ng-click="vm.addMeeeting(g)">
                 <i class="glyphicon glyphicon-plus"></i> Meeting

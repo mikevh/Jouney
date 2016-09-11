@@ -21,9 +21,11 @@
         function activate() {
             communityGroupService.all().then(function (result) {
                 vm.communityGroups = result.data;
-                angular.forEach(vm.communityGroups, function(x) {
+                angular.forEach(vm.communityGroups, function (x) {
+                    communityGroupService.membershipCount(x.id).then(function(y) {
+                        x.membershipCount = y.data;
+                    });
                     communityGroupService.latest(x.id).then(function (y) {
-                        
                         x.latest = y.data === null ? null : new Date(y.data);
                     });
                 });
