@@ -16,7 +16,7 @@ namespace Journey.Web.Controllers
         private readonly ApplicationDbContext _db = new ApplicationDbContext();
 
         public IHttpActionResult GetAttendees() {
-            var rv = _db.Attendees.ToDtos();
+            var rv = _db.Attendees.Include(x => x.CommunityGroup).ToDtos();
 
             return Ok(rv);
         }
@@ -26,7 +26,6 @@ namespace Journey.Web.Controllers
             if (attendee == null) {
                 return NotFound();
             }
-
             var rv = attendee.ToDto();
 
             return Ok(rv);
@@ -42,6 +41,10 @@ namespace Journey.Web.Controllers
             }
 
             var attendeeModel = attendee.ToModel();
+            if (attendeeModel.CommunityGroupId == 0)
+            {
+                attendeeModel.CommunityGroupId = null;
+            }
             _db.Entry(attendeeModel).State = EntityState.Modified;
 
             try {
@@ -62,7 +65,10 @@ namespace Journey.Web.Controllers
                 return BadRequest(ModelState);
             }
             var attendeeModel = attendee.ToModel();
-
+            if (attendeeModel.CommunityGroupId == 0)
+            {
+                attendeeModel.CommunityGroupId = null;
+            }
             _db.Attendees.Add(attendeeModel);
             _db.SaveChanges();
 

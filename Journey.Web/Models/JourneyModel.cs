@@ -15,6 +15,8 @@ namespace Journey.Web.Models
         
         public bool IsMember { get; set; }
 
+        public int? CommunityGroupId { get; set; }
+        public virtual CommunityGroup CommunityGroup { get; set; }
         public virtual ICollection<Meeting> Meetings { get; set; }
     }
 
@@ -41,6 +43,8 @@ namespace Journey.Web.Models
 
         [NotMapped]
         public DateTime? LastMeeting { get; private set; }
+
+        public virtual ICollection<Attendee> GroupMemebers { get; set; }
     }
 
     public class Leader
@@ -50,5 +54,6 @@ namespace Journey.Web.Models
 
         public virtual ICollection<CommunityGroup> CommunityGroups { get; set; } 
     }
+
 
 }

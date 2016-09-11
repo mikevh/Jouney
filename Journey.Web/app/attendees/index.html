@@ -5,12 +5,14 @@
 <table class="table">
     <tr>
         <th>Name</th>
-        <th>Member</th>
+        <th>Church Member</th>
+        <th>CG Member</th>
         <th></th>
     </tr>
     <tr ng-repeat="a in vm.attendees">
         <td>{{a.name}}</td>
         <td><i class="glyphicon" ng-class="{'glyphicon-ok': a.isMember, 'glyphicon-unchecked': !a.isMember}"></i></td>
+        <td>{{a.communityGroup.name}}</td>
         <td>
             <a href="#/Attendees/{{a.id}}">Edit</a> |
             <a href="" ng-click="vm.remove(a)">Delete</a>

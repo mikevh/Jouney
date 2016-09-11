@@ -12,6 +12,7 @@ namespace Journey.Web.DTO
         public int LeaderId { get; set; }
 
         public Leader Leader { get; set; }
+        public List<Attendee> Attendees { get; set; }
     }
 
     public class Leader
@@ -32,7 +33,8 @@ namespace Journey.Web.DTO
         public int Id { get; set; }
         public string Name { get; set; }
         public bool IsMember { get; set; }
-
+        public int? CommunityGroupId { get; set; }
+        public CommunityGroup CommunityGroup { get; set; }
         public List<Meeting> Meetings { get; set; }
     }
 
