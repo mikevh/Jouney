@@ -2,6 +2,11 @@
 <p>
     <a href="#/Attendees/0">Create New</a>
 </p>
+<p>
+    Filter Attendees by group<select ng-options="o.id as o.name for o in vm.groups"
+                                     ng-model="vm.filterCommunityGroupId"
+                                     ng-change="vm.filterCommunityGroup()"></select> <button type="button" class="btn btn-default" ng-click="vm.clearFilter()" ng-disabled="vm.filterCommunityGroupId === -1">Clear filter</button>
+</p>
 <table class="table">
     <tr>
         <th>Name</th>
