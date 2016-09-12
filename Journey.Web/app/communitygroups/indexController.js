@@ -10,7 +10,7 @@
     function controller($route, $location, communityGroupService) {
         var vm = this;
         vm.addMeeeting = addMeeeting;
-        vm.remove = remove;
+        //vm.remove = remove;
 
         activate();
 

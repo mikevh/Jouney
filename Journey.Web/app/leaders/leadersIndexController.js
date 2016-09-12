@@ -9,7 +9,7 @@
 
     function leaders($location, $route, leadersService, $q) {
         var vm = this;
-        vm.remove = remove;
+        //vm.remove = remove;
 
         activate();
 
