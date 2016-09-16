@@ -41,7 +41,7 @@ namespace Journey.Web.Controllers
         {
             var lastMeeting =_db.Meetings.Where(x => x.CommunityGroupId == id)
                 .OrderByDescending(x => x.Date)
-                .SingleOrDefault();
+                .FirstOrDefault();
             var rv = lastMeeting?.Id ?? 0;
             return Ok(rv);
         }

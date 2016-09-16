@@ -31,7 +31,6 @@
                         x.latestMeetingDate = y.data === null ? null : new Date(y.data);
                     });
                     communityGroupService.latestMeetingId(x.id).then(function (y) {
-                        debugger;
                         x.latestMeetingId = y.data;
                     });
                     
