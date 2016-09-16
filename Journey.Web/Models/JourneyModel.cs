@@ -14,7 +14,7 @@ namespace Journey.Web.Models
         public string Name { get; set; }
         
         public bool IsMember { get; set; }
-
+        public bool IsDeleted { get; set; }
         public int? CommunityGroupId { get; set; }
         public virtual CommunityGroup CommunityGroup { get; set; }
         public virtual ICollection<Meeting> Meetings { get; set; }
@@ -25,7 +25,7 @@ namespace Journey.Web.Models
         public int Id { get; set; }
         
         public DateTime Date { get; set; }
-        
+        public int IsDeleted { get; set; }
         public int CommunityGroupId { get; set; }
 
         public virtual CommunityGroup CommunityGroup { get; set; }
@@ -38,7 +38,7 @@ namespace Journey.Web.Models
         public string Name { get; set; }
         
         public int LeaderId { get; set; }
-
+        public bool IsDeleted { get; set; }
         public virtual Leader Leader { get; set; }
 
         [NotMapped]
@@ -51,7 +51,7 @@ namespace Journey.Web.Models
     {
         public int Id { get; set; }
         public string Email { get; set; }
-
+        public bool IsDeleted { get; set; }
         public virtual ICollection<CommunityGroup> CommunityGroups { get; set; } 
     }
 
