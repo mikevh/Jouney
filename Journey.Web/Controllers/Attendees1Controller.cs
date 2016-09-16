@@ -16,7 +16,10 @@ namespace Journey.Web.Controllers
         private readonly ApplicationDbContext _db = new ApplicationDbContext();
 
         public IHttpActionResult GetAttendees() {
-            var rv = _db.Attendees.Include(x => x.CommunityGroup).ToDtos();
+            var rv = _db.Attendees
+                .Include(x => x.CommunityGroup)
+                .Where(x => !x.IsDeleted)
+                .ToDtos();
 
             return Ok(rv);
         }
@@ -81,7 +84,8 @@ namespace Journey.Web.Controllers
                 return NotFound();
             }
 
-            _db.Attendees.Remove(attendee);
+            //_db.Attendees.Remove(attendee);
+            attendee.IsDeleted = true;
             _db.SaveChanges();
             var rv = attendee.ToDto();
 

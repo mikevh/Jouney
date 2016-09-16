@@ -21,12 +21,12 @@ namespace Journey.Web.Controllers
         [Route("membershipcount/{id}")]
         public IHttpActionResult GetMembershipCount(int id)
         {
-            var count = _db.Attendees.Count(x => x.CommunityGroupId == id);
+            var count = _db.Attendees.Count(x => !x.IsDeleted && x.CommunityGroupId == id);
 
             return Ok(count);
         }
 
-        [Route("latest/{id}")]
+        [Route("latestmeetingdate/{id}")]
         public IHttpActionResult GetLatestMeeting(int id) {
             var query = "SELECT MAX(Date) FROM Meetings WHERE CommunityGroupId = @p0";
 
@@ -35,8 +35,19 @@ namespace Journey.Web.Controllers
             return Ok(rv);
         }
 
+        [HttpGet]
+        [Route("latestmeetingid/forgroup/{id}")]
+        public IHttpActionResult LatestMeetingIdForGroup(int id)
+        {
+            var lastMeeting =_db.Meetings.Where(x => x.CommunityGroupId == id)
+                .OrderByDescending(x => x.Date)
+                .SingleOrDefault();
+            var rv = lastMeeting?.Id ?? 0;
+            return Ok(rv);
+        }
+
         public IHttpActionResult GetCommunityGroups() {
-            var rv = _db.CommunityGroups.Include(x => x.Leader).ToDtos();
+            var rv = _db.CommunityGroups.Include(x => x.Leader).Where(x => !x.IsDeleted).ToDtos();
             return Ok(rv);
         }
 

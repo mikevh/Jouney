@@ -1,4 +1,5 @@
-﻿(function () {
+﻿/// <reference path="dataservice.js" />
+(function () {
     'use strict';
 
     angular
@@ -12,12 +13,16 @@
 
         var service = rest.api(api);
 
-        service.latest = function (id) {
-            return $http.get(api + '/latest/' + id);
+        service.latestMeetingDate = function (id) {
+            return $http.get(api + '/latestmeetingdate/' + id);
         };
 
         service.membershipCount = function(id) {
             return $http.get(api + '/membershipcount/' + id);
+        };
+
+        service.latestMeetingId = function(id) {
+            return $http.get(api + '/latestmeetingid/forgroup/' + id);
         };
 
         return service;

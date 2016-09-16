@@ -13,15 +13,15 @@
         <td>{{ g.name }}</td>
         <td>{{ g.leader.email }}</td>
         <td>{{ g.membershipCount }}</td>
-        <td>{{ g.latest | date}}</td>
+        <td><a href="#/Meetings/{{ g.latestMeetingId }}">{{ g.latestMeetingDate | date }}</a></td>
         <td>
             <button type="button" class="btn btn-default" ng-click="vm.addMeeeting(g)">
                 <i class="glyphicon glyphicon-plus"></i> Meeting
             </button>
         </td>
         <td>
-            <a href="#/CommunityGroups/{{g.id}}">Edit</a> |
-            <!--<a href="" ng-click="vm.remove(g)">Delete</a>-->
+            <a href="#/CommunityGroups/{{g.id}}">Edit</a><!-- |
+            <a href="" ng-click="vm.remove(g)">Delete</a>-->
         </td>
     </tr>
 </table>
