@@ -105,12 +105,16 @@ namespace Journey.Web.Controllers
 
             // add all new attendees
             foreach (var na in meeting_vm.Attendees) {
-                if (origModel.Attendees.All(a => a.Id != na.Id)) {
-                    if (na.Id > 0) {
+                if (origModel.Attendees.All(a => a.Id != na.Id))
+                {
+                    if (na.Id > 0)
+                    {
                         origModel.Attendees.Add(db.Attendees.FirstOrDefault(x => x.Id == na.Id));
                     }
-                    else {
-                        origModel.Attendees.Add(Mapper.Map<Attendee>(na));
+                    else { 
+                        var newAttendee = Mapper.Map<Attendee>(na);
+                        newAttendee.Name = newAttendee.Name.Trim();
+                        origModel.Attendees.Add(newAttendee);
                     }
                 }
             }

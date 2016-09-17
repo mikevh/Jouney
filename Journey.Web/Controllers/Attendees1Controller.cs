@@ -44,6 +44,7 @@ namespace Journey.Web.Controllers
             }
 
             var attendeeModel = attendee.ToModel();
+            attendeeModel.Name = attendeeModel.Name.Trim();
             if (attendeeModel.CommunityGroupId == 0)
             {
                 attendeeModel.CommunityGroupId = null;
@@ -68,6 +69,7 @@ namespace Journey.Web.Controllers
                 return BadRequest(ModelState);
             }
             var attendeeModel = attendee.ToModel();
+            attendeeModel.Name = attendeeModel.Name.Trim();
             if (attendeeModel.CommunityGroupId == 0)
             {
                 attendeeModel.CommunityGroupId = null;
