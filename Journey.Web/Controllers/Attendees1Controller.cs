@@ -44,7 +44,10 @@ namespace Journey.Web.Controllers
             }
 
             var attendeeModel = attendee.ToModel();
+
             attendeeModel.Name = attendeeModel.Name.Trim();
+            attendeeModel.IsDeleted = false;
+
             if (attendeeModel.CommunityGroupId == 0)
             {
                 attendeeModel.CommunityGroupId = null;
@@ -86,8 +89,9 @@ namespace Journey.Web.Controllers
                 return NotFound();
             }
 
-            //_db.Attendees.Remove(attendee);
+            attendee.CommunityGroupId = null;
             attendee.IsDeleted = true;
+
             _db.SaveChanges();
             var rv = attendee.ToDto();
 

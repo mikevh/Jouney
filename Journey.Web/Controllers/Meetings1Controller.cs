@@ -54,8 +54,6 @@ namespace Journey.Web.Controllers
                 return NotFound();
             }
 
-            //var rv = Mapper.Map<DTO.Meeting>(meeting);
-
             var rv = new DTO.Meeting
             {
                 Id = m.Id,

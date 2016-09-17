@@ -9,7 +9,7 @@
 
     function controller($route, attendeesService, communityGroupService) {
         var vm = this;
-        //vm.remove = remove;
+        vm.remove = remove;
 
         vm.clearFilter = function() {
             vm.filterCommunityGroupId = -1;
@@ -47,10 +47,13 @@
             });
         }
 
-        //function remove(a) {
-        //    attendeesService.remove(a.id).then(function (result) {
-        //        $route.reload();
-        //    });
-        //}
+        function remove(a) {
+            if (!confirm('Are you sure you wish to delete this Attendee?')) {
+                return;
+            }
+            attendeesService.remove(a.id).then(function (result) {
+                $route.reload();
+            });
+        }
     }
 })();
