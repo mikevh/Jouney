@@ -3,5 +3,6 @@
 
     angular
         .module('app.core')
-        .constant('_', _);
+        .constant('_', _)
+        .constant('toastr', toastr);
 })()

@@ -3,6 +3,13 @@
 
     var core = angular.module('app.core');
 
+    core.config(toastrConfig);
+
+    function toastrConfig(toastr) {
+        toastr.options.timeOut = 4000;
+        toastr.options.positionClass = 'toast-top-right';
+    }
+
     var config = {
         appErrorPrefix: '[journey web error] ',
         appTitle: 'Journey Groups',

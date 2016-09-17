@@ -5,9 +5,7 @@
         .module('app.leaders')
         .controller('leadersIndexController', leaders);
 
-    leaders.$inject = ['$location', '$route', 'leadersService', '$q'];
-
-    function leaders($location, $route, leadersService, $q) {
+    function leaders($location, $route, leadersService, $q, logger) {
         var vm = this;
         //vm.remove = remove;
 

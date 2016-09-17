@@ -3,15 +3,14 @@
 
     angular
         .module('app', [
-            'ngAnimate',
-            'ui.bootstrap',
-            'angular-loading-bar',
             'app.core',
             'app.dashboard',
             'app.layout',
             'app.leaders',
             'app.communitygroups',
             'app.attendees',
-            'app.meetings'
+            'app.meetings',
+            'ui.bootstrap',
+            'angular-loading-bar'
         ]);
 })();

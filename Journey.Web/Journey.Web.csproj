@@ -291,6 +291,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="lib\loading-bar.min.css" />
     <Content Include="lib\loading-bar.min.js" />
+    <Content Include="lib\toastr.min.css" />
+    <Content Include="lib\toastr.min.js" />
     <Content Include="lib\ui-bootstrap-csp.css" />
     <Content Include="lib\ui-bootstrap-tpls.js" />
     <Content Include="lib\angular.min.js" />
