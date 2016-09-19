@@ -13,7 +13,8 @@ namespace Journey.Web.Migrations
     internal sealed class UserConfiguration : DbMigrationsConfiguration<ApplicationDbContext>
     {
         public UserConfiguration() {
-            AutomaticMigrationsEnabled = true;
+            AutomaticMigrationsEnabled = false;
+            
         }
 
         private string adminUsername => ConfigurationManager.AppSettings["adminUsername"] ?? "admin@admin.com";

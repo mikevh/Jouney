@@ -7,7 +7,7 @@
 
     function leaders($location, $route, leadersService, $q, logger) {
         var vm = this;
-        //vm.remove = remove;
+        vm.remove = remove;
 
         activate();
 
@@ -17,10 +17,12 @@
             });
         }
 
-        //function remove(l) {
-        //    leadersService.remove(l.id).then(function(result) {
-        //        $route.reload();
-        //    });
-        //}
+        function remove(l) {
+            leadersService.remove(l.id).then(function(result) {
+                $route.reload();
+            }, function(error) {
+                logger.error(error.data.exceptionMessage);
+            });
+        }
     }
 })();

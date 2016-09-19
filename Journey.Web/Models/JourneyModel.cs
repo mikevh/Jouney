@@ -25,7 +25,7 @@ namespace Journey.Web.Models
         public int Id { get; set; }
         
         public DateTime Date { get; set; }
-        public int IsDeleted { get; set; }
+        public bool IsDeleted { get; set; }
         public int CommunityGroupId { get; set; }
 
         public virtual CommunityGroup CommunityGroup { get; set; }

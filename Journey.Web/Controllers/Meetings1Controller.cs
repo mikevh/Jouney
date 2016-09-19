@@ -32,6 +32,7 @@ namespace Journey.Web.Controllers
             var rv = db.Meetings
                 .Include(x => x.Attendees)
                 .Include(x => x.CommunityGroup)
+                .Where(x => !x.IsDeleted)
                 .Select(m => new DTO.Meeting
                 {
                     Id = m.Id,
@@ -143,13 +144,16 @@ namespace Journey.Web.Controllers
             return Ok(model.Id);
         }
 
-        public IHttpActionResult DeleteMeeting(int id) {
-            Meeting meeting = db.Meetings.Find(id);
+        public IHttpActionResult DeleteMeeting(int id)
+        {
+            Meeting meeting = db.Meetings.Include(x => x.Attendees).FirstOrDefault(x => x.Id == id);
             if (meeting == null) {
                 return NotFound();
             }
 
-            db.Meetings.Remove(meeting);
+            meeting.Attendees.Clear();
+            meeting.IsDeleted = true;
+
             db.SaveChanges();
 
             return Ok(meeting);

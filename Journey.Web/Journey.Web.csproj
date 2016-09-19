@@ -220,7 +220,12 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201609170312054_Update isdelete to bit.cs" />
+    <Compile Include="Migrations\201609170312054_Update isdelete to bit.Designer.cs">
+      <DependentUpon>201609170312054_Update isdelete to bit.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Migrations\MigrationExtensions.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\JourneyModel.cs" />
@@ -384,6 +389,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\blocks\logger\logger.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201609170312054_Update isdelete to bit.resx">
+      <DependentUpon>201609170312054_Update isdelete to bit.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -69,6 +69,7 @@ namespace Journey.Web.Controllers
                 return BadRequest();
             }
             var model = vm.ToModel();
+            model.IsDeleted = false;
             _db.Entry(model).State = EntityState.Modified;
 
             try {
@@ -96,12 +97,15 @@ namespace Journey.Web.Controllers
         }
 
         public IHttpActionResult DeleteCommunityGroup(int id) {
-            var model = _db.CommunityGroups.Find(id);
+            var model = _db.CommunityGroups.Include(x => x.GroupMemebers).SingleOrDefault(x => x.Id == id);
             if (model == null) {
                 return NotFound();
             }
 
-            _db.CommunityGroups.Remove(model);
+            model.GroupMemebers.Clear();
+
+            model.IsDeleted = true;
+
             _db.SaveChanges();
             var rv = model.ToDto();
 

@@ -30,7 +30,7 @@ namespace Journey.Web.Controllers
                 var rv = new {
                     Id = id,
                     Roles = UserManager.GetRoles(id),
-                    Name = User.Identity.Name
+                    User.Identity.Name
                 };
                 return Ok(rv);
             }
@@ -38,7 +38,7 @@ namespace Journey.Web.Controllers
         }
 
         public IHttpActionResult GetLeaders() {
-            var rv = _db.Leaders.ToDtos();
+            var rv = _db.Leaders.Where(x => !x.IsDeleted).ToDtos();
             return Ok(rv);
         }
 
@@ -111,10 +111,16 @@ namespace Journey.Web.Controllers
                 return NotFound();
             }
 
+            if (_db.CommunityGroups.Any(x => x.LeaderId == id && !x.IsDeleted))
+            {
+                throw new InvalidOperationException("This leader leads a community group, reassign group leadership before deleting this leader");
+            }
+
+            model.IsDeleted = true;
+
             var user = UserManager.FindByEmail(model.Email);
             UserManager.Delete(user);
 
-            _db.Leaders.Remove(model);
             _db.SaveChanges();
             var rv = model.ToDto();
 
