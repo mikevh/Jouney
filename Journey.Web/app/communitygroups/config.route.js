@@ -28,6 +28,14 @@
                     controller: 'cgEditController',
                     controllerAs: 'vm'
                 }
+            },
+            {
+                url: '/CommunityGroups/Roster/:id',
+                config: {
+                    templateUrl: 'app/communitygroups/roster.html',
+                    controller: 'cgRosterController',
+                    controllerAs: 'vm'
+                }
             }
         ];
     }

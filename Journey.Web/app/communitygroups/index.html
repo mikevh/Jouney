@@ -2,6 +2,7 @@
 <p><a href="#/CommunityGroups/0">Create New</a></p>
 <table class="table">
     <tr>
+        <th>Roster</th>
         <th>Name</th>
         <th>Leader</th>
         <th>Number of Members</th>
@@ -10,6 +11,10 @@
         <th></th>
     </tr>
     <tr ng-repeat="g in vm.communityGroups">
+        <td><button type="button" class="btn btn-default" ng-click="vm.showRoster(g)">
+                <i class="glyphicon glyphicon-list-alt"></i>
+            </button>
+        </td>
         <td>{{ g.name }}</td>
         <td>{{ g.leader.email }}</td>
         <td>{{ g.membershipCount }}</td>

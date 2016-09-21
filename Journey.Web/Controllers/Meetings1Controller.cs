@@ -17,6 +17,7 @@ using NLog;
 namespace Journey.Web.Controllers
 {
     [Authorize]
+    [RoutePrefix("api/meetings1")]
     public class Meetings1Controller : ApiController
     {
         private readonly ApplicationDbContext db = new ApplicationDbContext();
@@ -25,6 +26,34 @@ namespace Journey.Web.Controllers
         public Meetings1Controller()
         {
             _logger = LogManager.GetCurrentClassLogger();
+        }
+
+        [HttpGet]
+        [Route("meetingsforgroup/{id}")]
+        public IHttpActionResult MeetingsForGroup(int id)
+        {
+            var rv =
+                db.Meetings
+                .Where(x => !x.IsDeleted && x.CommunityGroupId == id)
+                .Select(x => new
+                {
+                    Meeting = x,
+                    Attendees = x.Attendees.Where(y => !y.IsDeleted)
+                })
+                .OrderByDescending(x => x.Meeting.Date)
+                .Select(x => new DTO.Meeting
+                {
+                    Id = x.Meeting.Id,
+                    CommunityGroupId = x.Meeting.CommunityGroupId,
+                    Date = x.Meeting.Date,
+                    Attendees = x.Attendees.Select(y => new DTO.Attendee
+                    {
+                        Id = y.Id,
+                        IsMember = y.IsMember,
+                        Name = y.Name
+                    })
+                });
+            return Ok(rv);
         }
 
         public IHttpActionResult GetMeetings()
@@ -138,6 +167,7 @@ namespace Journey.Web.Controllers
             foreach (var a in meeting.Attendees.Where(x => x.Id == 0)) {
                 model.Attendees.Add(a.ToModel());
             }
+            model.Date = model.Date.Date;
             db.Meetings.Add(model);
             db.SaveChanges();
 

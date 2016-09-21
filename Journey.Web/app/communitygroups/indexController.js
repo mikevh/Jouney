@@ -11,8 +11,13 @@
         var vm = this;
         vm.addMeeeting = addMeeeting;
         vm.remove = remove;
+        vm.showRoster = showRoster;
 
         activate();
+
+        function showRoster(g) {
+            $location.path('/CommunityGroups/Roster/' + g.id);
+        }
 
         function addMeeeting(group) {
             $location.path('/Meetings/ForGroup/' + group.id);

@@ -1,0 +1,13 @@
+﻿<h2>{{vm.g.name}}</h2>
+<table class="table">
+    <tr>
+        <th>Name</th>
+        <th ng-repeat="m in vm.meetings">{{m.date | date}}</th>
+    </tr>
+    <tr ng-repeat="a in vm.attendees">
+        <td>{{a.name}}</td>
+        <td ng-repeat="m in vm.meetings">
+            <i ng-show="vm.attended(a, m)" class="glyphicon glyphicon-ok"></i>
+        </td>
+    </tr>
+</table>

@@ -3,11 +3,20 @@
 
     angular
         .module('app.meetings')
-        .factory('meetingsService', factory);
+        .factory('meetingsService', service);
 
-    factory.$inject = ['rest'];
+    service.$inject = ['rest', '$http', 'logger'];
 
-    function factory(rest) {
-        return rest.api('/api/meetings1');
+    function service(rest, $http, logger) {
+        
+        var api = '/api/meetings1';
+        var service = rest.api(api);
+
+        service.meetingsForGroup = function(id) {
+            return $http.get(api + '/meetingsForGroup/' + id);
+        };
+
+        return service;
     }
+
 })();
