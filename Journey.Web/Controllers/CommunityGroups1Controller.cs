@@ -18,6 +18,22 @@ namespace Journey.Web.Controllers
     {
         private readonly ApplicationDbContext _db = new ApplicationDbContext();
 
+        [HttpGet]
+        [Route("groupmembers/{id}")]
+        public IHttpActionResult GroupMemebers(int id)
+        {
+            var rv = _db.Attendees.Where(x => !x.IsDeleted && x.CommunityGroupId == id).Select(x => new DTO.Attendee
+            {
+                Name = x.Name,
+                Id = x.Id,
+                IsMember = x.IsMember,
+                CommunityGroupId = x.CommunityGroupId ?? 0
+            });
+
+            return Ok(rv);
+        }
+
+        [HttpGet]
         [Route("membershipcount/{id}")]
         public IHttpActionResult GetMembershipCount(int id)
         {
@@ -26,9 +42,10 @@ namespace Journey.Web.Controllers
             return Ok(count);
         }
 
+        [HttpGet]
         [Route("latestmeetingdate/{id}")]
         public IHttpActionResult GetLatestMeeting(int id) {
-            var query = "SELECT MAX(Date) FROM Meetings WHERE CommunityGroupId = @p0";
+            var query = "SELECT MAX(Date) FROM Meetings WHERE CommunityGroupId = @p0 AND IsDeleted = 0";
 
             var rv = _db.Database.SqlQuery<DateTime?>(query, id).FirstOrDefault();
 

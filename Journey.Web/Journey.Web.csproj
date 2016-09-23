@@ -252,6 +252,8 @@
     <Content Include="app\blocks\router\router.module.js" />
     <Content Include="app\communitygroups\communitygroups.module.js" />
     <Content Include="app\communitygroups\dataservice.js" />
+    <Content Include="app\communitygroups\roster.html" />
+    <Content Include="app\communitygroups\rosterController.js" />
     <Content Include="app\core\config.js" />
     <Content Include="app\core\constants.js" />
     <Content Include="app\core\core.module.js" />

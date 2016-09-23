@@ -5,9 +5,9 @@
         .module('app.dashboard')
         .controller('dashboardController', dashboard);
 
-    dashboard.$inject = ['$q', 'logger', '$location'];
+    dashboard.$inject = ['logger', '$location'];
 
-    function dashboard($q, logger, $location) {
+    function dashboard(logger, $location) {
         var vm = this;
 
         activate();
