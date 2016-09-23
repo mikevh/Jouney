@@ -25,6 +25,10 @@
             return $http.get(api + '/latestmeetingid/forgroup/' + id);
         };
 
+        service.groupMembers = function(id) {
+            return $http.get(api + '/groupmembers/' + id);
+        };
+
         return service;
     }
 })();

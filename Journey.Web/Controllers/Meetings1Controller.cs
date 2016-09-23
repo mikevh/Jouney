@@ -50,7 +50,8 @@ namespace Journey.Web.Controllers
                     {
                         Id = y.Id,
                         IsMember = y.IsMember,
-                        Name = y.Name
+                        Name = y.Name,
+                        CommunityGroupId = y.CommunityGroupId ?? 0
                     })
                 });
             return Ok(rv);

@@ -19,7 +19,7 @@ namespace Journey.Web.Controllers
         private readonly ApplicationDbContext _db = new ApplicationDbContext();
 
         [HttpGet]
-        [Route("groupmembers/{id")]
+        [Route("groupmembers/{id}")]
         public IHttpActionResult GroupMemebers(int id)
         {
             var rv = _db.Attendees.Where(x => !x.IsDeleted && x.CommunityGroupId == id).Select(x => new DTO.Attendee
@@ -27,6 +27,7 @@ namespace Journey.Web.Controllers
                 Name = x.Name,
                 Id = x.Id,
                 IsMember = x.IsMember,
+                CommunityGroupId = x.CommunityGroupId ?? 0
             });
 
             return Ok(rv);
