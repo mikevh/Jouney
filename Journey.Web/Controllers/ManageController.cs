@@ -3,10 +3,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Journey.Web.Extensions;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Journey.Web.Models;
+using NLog;
 
 namespace Journey.Web.Controllers
 {
@@ -15,9 +17,11 @@ namespace Journey.Web.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private readonly Logger _logger;
 
         public ManageController()
         {
+            _logger = LogManager.GetCurrentClassLogger();
         }
 
         public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
@@ -236,10 +240,13 @@ namespace Journey.Web.Controllers
                 var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
                 if (user != null)
                 {
+                    _logger.Warn($"Password changed for User id {User.Identity.GetUserId()} but then couldn't find them after");
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                 }
+                _logger.Info($"{User.Identity.Name} has changed their password");
                 return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
             }
+            _logger.Info($"Error changing password for {User.Identity.Name}: {result.ToJson()}");
             AddErrors(result);
             return View(model);
         }
