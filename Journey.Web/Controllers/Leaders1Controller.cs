@@ -5,22 +5,27 @@ using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Web;
 using System.Web.Http;
-using System.Web.Http.Description;
 using Journey.Web.App_Start;
 using Journey.Web.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using NLog;
 
 namespace Journey.Web.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Administrator")]
     public class Leaders1Controller : ApiController
     {
+        private readonly Logger _logger;
         private readonly ApplicationDbContext _db = new ApplicationDbContext();
         private ApplicationUserManager UserManager => HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
+
+        public Leaders1Controller()
+        {
+            _logger = LogManager.GetCurrentClassLogger();
+        }
 
         [HttpGet]
         [Route("api/whoami")]
@@ -37,8 +42,25 @@ namespace Journey.Web.Controllers
             return Unauthorized();
         }
 
-        public IHttpActionResult GetLeaders() {
-            var rv = _db.Leaders.Where(x => !x.IsDeleted).ToDtos();
+        public IHttpActionResult GetLeaders()
+        {
+            // assumes a single admin role in system, if you have a role, it's the admin role
+            var users = UserManager.Users
+                .Include(x => x.Roles)
+                .ToDictionary(x => x.Email, x => x.Roles.Any());
+
+            var rv = _db.Leaders.Where(x => !x.IsDeleted)
+                .OrderBy(x => x.Email)
+                .Select(x => new DTO.Leader
+                {
+                    Id = x.Id,
+                    Email = x.Email,
+                }).ToList();
+
+            foreach (var u in rv)
+            {
+                u.IsAdmin = users[u.Email];
+            }
             return Ok(rv);
         }
 
@@ -47,7 +69,16 @@ namespace Journey.Web.Controllers
             if (model == null) {
                 return NotFound();
             }
-            var rv = model.ToDto();
+
+            // assumes a single admin role in system, if you have a role, it's the admin role
+            var isAdmin = UserManager.FindByEmail(model.Email).Roles;
+
+            var rv = new DTO.Leader
+            {
+                Id = model.Id,
+                Email = model.Email,
+                IsAdmin = isAdmin.Any()
+            };
             return Ok(rv);
         }
 
@@ -65,6 +96,21 @@ namespace Journey.Web.Controllers
             _db.Entry(model).State = EntityState.Modified;
 
             var user = UserManager.FindByEmail(email);
+            if (user == null)
+            {
+                _logger.Error($"User with email of {email} not found");
+                throw new ArgumentException($"User not found {email}");
+            }
+            if (vm.IsAdmin && !user.Roles.Any())
+            {
+                UserManager.AddToRole(user.Id, "Administrator");
+                _logger.Info($"Added Administrator role to {email}");
+            }
+            else if (!vm.IsAdmin && user.Roles.Any())
+            {
+                _logger.Info($"Removed Administrator role from {email}");
+                user.Roles.Clear();
+            }
             user.UserName = vm.Email;
             user.Email = vm.Email;
             user.LockoutEnabled = false;
