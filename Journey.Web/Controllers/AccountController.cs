@@ -198,7 +198,7 @@ namespace Journey.Web.Controllers
                 // Send an email with this link
                 string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
-                await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                await UserManager.SendEmailAsync(user.Id, "Reset Password for Journey Groups", "A password reset was requested for your account<br/><br/>You can reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
                 _logger.Info($"Password reset email sent to {model.Email}");
                 return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }

@@ -32,7 +32,7 @@ namespace Journey.Web
                 var from = new Email("mikevh@gmail.com");
                 var subject = message.Subject;
                 var to = new Email(message.Destination);
-                var content = new Content("text/plain", message.Body);
+                var content = new Content("text/html", message.Body);
                 var mail = new Mail(from, subject, to, content);
 
                 var key = ConfigurationManager.AppSettings["sendgridkey"];

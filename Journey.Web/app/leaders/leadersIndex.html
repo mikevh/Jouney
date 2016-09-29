@@ -4,16 +4,13 @@
 </p>
 <table class="table">
     <tr>
-        <th>
-            Email
-        </th>
-        
+        <th>Email</th>
+        <th>Admin</th>
         <th></th>
     </tr>
     <tr ng-repeat="l in vm.leaders">
-        <td>
-            {{l.email}}
-        </td>
+        <td>{{l.email}}</td>
+        <td><i class="glyphicon" ng-class="{'glyphicon-ok': l.isAdmin, 'glyphicon-unchecked': !l.isAdmin}"></i></td>
         
         <td>
             <a href="#/Leaders/{{l.id}}">Edit</a> |
