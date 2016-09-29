@@ -27,21 +27,6 @@ namespace Journey.Web.Controllers
             _logger = LogManager.GetCurrentClassLogger();
         }
 
-        [HttpGet]
-        [Route("api/whoami")]
-        public IHttpActionResult WhoAmI() {
-            if (User.Identity.IsAuthenticated) {
-                string id = User.Identity.GetUserId();
-                var rv = new {
-                    Id = id,
-                    Roles = UserManager.GetRoles(id),
-                    User.Identity.Name
-                };
-                return Ok(rv);
-            }
-            return Unauthorized();
-        }
-
         public IHttpActionResult GetLeaders()
         {
             // assumes a single admin role in system, if you have a role, it's the admin role

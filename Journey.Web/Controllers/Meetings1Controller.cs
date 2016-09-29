@@ -74,7 +74,8 @@ namespace Journey.Web.Controllers
                         Name = a.Name,
                         IsMember = a.IsMember
                     })
-                });
+                }).OrderByDescending(x => x.Date)
+                .ToList();
 
             return Ok(rv);
         }
