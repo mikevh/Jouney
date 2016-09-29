@@ -221,9 +221,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201609170312054_Update isdelete to bit.cs" />
-    <Compile Include="Migrations\201609170312054_Update isdelete to bit.Designer.cs">
-      <DependentUpon>201609170312054_Update isdelete to bit.cs</DependentUpon>
+    <Compile Include="Migrations\201609291453250_initial.cs" />
+    <Compile Include="Migrations\201609291453250_initial.Designer.cs">
+      <DependentUpon>201609291453250_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\MigrationExtensions.cs" />
@@ -394,8 +394,8 @@
     <Content Include="app\blocks\logger\logger.js" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201609170312054_Update isdelete to bit.resx">
-      <DependentUpon>201609170312054_Update isdelete to bit.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201609291453250_initial.resx">
+      <DependentUpon>201609291453250_initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
